@@ -1,0 +1,61 @@
+version: "3"
+services:
+  db:
+    image: postgres:alpine3.19
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "PROD"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "PROD"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "PROD", "-U", "postgres" ]
+      interval: 5s
+      timeout: 60s
+      retries: 20
+    user: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@accomplice.site"
+      PGADMIN_DEFAULT_PASSWORD: PROD
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    ports:
+      - "8000:80"
+  app:
+    build: ./backend
+    command: "python main.py"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: PROD
+      DB_NAME: PROD
+      PORT: 8888
+      HOST: "0.0.0.0"
+    volumes:
+      - ./backend:/app
+  nginx:
+    image: production-stage
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    restart: on-failure
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+      - pgadmin
+volumes:
+  pgadmin-data:
+  db-data:

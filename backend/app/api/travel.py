@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify
 
-from models import Travel
+from app.models.travel import Travel
 
-travel = Blueprint('travel', __name__, url_prefix='/travel')
+api_travel = Blueprint('travel', __name__, url_prefix='/travel')
 
 
-@travel.route('/get/<travel_id>', methods=['GET'])
+@api_travel.route('/get/<travel_id>', methods=['GET'])
 def get_travel(travel_id):
     if travel_id is None:
         return '', 400
@@ -17,7 +17,7 @@ def get_travel(travel_id):
     return travel.to_dict(), 200
 
 
-@travel.route('/create', methods=['POST'])
+@api_travel.route('/create', methods=['POST'])
 def create_travel():
     data = request.get_json()
     if data is None:

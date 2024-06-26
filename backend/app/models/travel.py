@@ -7,3 +7,4 @@ class Travel(db.Model):
                                   nullable=False)
     end_location_id = db.Column(db.Integer, db.ForeignKey('location.id'),
                                 nullable=False)
+

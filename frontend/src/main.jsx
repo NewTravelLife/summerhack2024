@@ -7,8 +7,11 @@ import image2 from './assets/image2.jpg';
 import image3 from './assets/image3.jpg';
 
 
+
 function App() {
   const [showText, setShowText] = useState(false);
+  const [city, setCity] = useState('');
+  const [filteredAttractions, setFilteredAttractions] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -18,48 +21,72 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    filterAttractions(city);
+  }, [city]);
+
   const attractions = [
     {
       image: image1,
       title: 'Достопримечательность 1',
-      description: 'Описание достопримечательности 1.'
+      description: 'Описание достопримечательности 1.',
+      city: "Москва"
     },
     {
       image: image1,
       title: 'Достопримечательность 2',
-      description: 'Описание достопримечательности 2.'
+      description: 'Описание достопримечательности 2.',
+      city: "Санкт-Петербург"
     },
     {
       image: image3,
       title: 'Достопримечательность 3',
-      description: 'Описание достопримечательности 3.'
+      description: 'Описание достопримечательности 3.',
+      city: "Санкт-Петербург"
     },
     {
       image: image3,
       title: 'Достопримечательность 4',
-      description: 'Описание достопримечательности 4.'
+      description: 'Описание достопримечательности 4.',
+      city: "Москва"
     },
     {
       image: image3,
       title: 'Достопримечательность 5',
-      description: 'Очень крутая достопримечательность, тут короче такоооое, что вам точно нужно посетить её.'
+      description: 'Очень крутая достопримечательность, тут короче такоооое, что вам точно нужно посетить её.',
+      city: "Москва"
     },
     {
       image: image3,
       title: 'Достопримечательность 6',
-      description: 'Описание достопримечательности 6.'
+      description: 'Описание достопримечательности 6.',
+      city: "Москва"
     },
     {
       image: image3,
       title: 'Достопримечательность 7',
-      description: 'Описание достопримечательности 7.'
+      description: 'Описание достопримечательности 7.',
+      city: "Москва"
     },
     {
       image: image3,
       title: 'Достопримечательность 8',
-      description: 'Описание достопримечательности 8.'
+      description: 'Описание достопримечательности 8.',
+      city: "Москва"
     }
   ];
+
+  const cities = ['Москва', 'Санкт-Петербург', 'Казань', 'Сочи'];
+
+  const filterAttractions = (selectedCity) => {
+    const filtered = attractions.map(attraction => {
+      if (selectedCity === '' || attraction.city === selectedCity) {
+        return attraction;
+      }
+      return null;
+    }).filter(attraction => attraction !== null);
+    setFilteredAttractions(filtered);
+  };
 
   return (
     <div>
@@ -78,8 +105,16 @@ function App() {
           </div>
         )}
       </div>
+      <div className="input-container">
+        <select value={city} onChange={(e) => setCity(e.target.value)}>
+          <option value="">Выберите город</option>
+          {cities.map((cityOption, index) => (
+            <option key={index} value={cityOption}>{cityOption}</option>
+          ))}
+        </select>
+      </div>
       <div className="attractions">
-        {attractions.map((attraction, index) => (
+        {filteredAttractions.map((attraction, index) => (
           <div className="card" key={index}>
             <img src={attraction.image} alt={attraction.title} className="card-image" />
             <h3 className="card-title">{attraction.title}</h3>
@@ -90,7 +125,6 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
 

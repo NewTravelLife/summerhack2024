@@ -7,4 +7,4 @@ class Base(DeclarativeBase):
     pass
 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app=app, model_class=Base)

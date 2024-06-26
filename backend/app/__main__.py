@@ -1,11 +1,11 @@
 import os
 
-from app.database import db, Base
+from app.database import Base, db
 from app.core import app
 from app.api import blueprints
 
-with app.app_context() as ctx:
-    Base.metadata.create_all(ctx)
+with app.app_context():
+    db.create_all()
 
 for blueprint in blueprints:
     app.register_blueprint(blueprint)

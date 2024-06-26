@@ -29,7 +29,7 @@ services:
       - "8000:80"
   app:
     build: ./backend
-    command: "python main.py"
+    command: "python -m app"
     depends_on:
       db:
         condition: service_healthy

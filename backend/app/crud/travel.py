@@ -1,17 +1,22 @@
+from typing import List
+
+from sqlalchemy import select
+
+from app.database import db
 from app.models.travel import Travel
 from app.models.location import Location
-from app.database import db
 
 
-def new_travel_from_dict(data) -> Travel | None:
-    if 'start_location' not in data or 'end_location' not in data:
-        return None
-    start_location = Location.new_location_from_dict(data['start_location'])
-    end_location = Location.new_location_from_dict(data['end_location'])
-    if start_location is None or end_location is None:
-        return None
-    travel = Travel(start_location_id=start_location.id,
-                    end_location_id=end_location.id)
+def crud_create_travel(locations: List[Location]) -> Travel:
+    travel = Travel(locations=locations)
     db.session.add(travel)
     db.session.commit()
+    db.session.refresh(travel)
     return travel
+
+
+def crud_get_travel_by_id(id: int) -> Travel | None:
+    stmt = select(Travel).where(Travel.id == id)
+    travel = db.session.scalar(stmt)
+    return travel
+

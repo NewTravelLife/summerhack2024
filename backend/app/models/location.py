@@ -1,20 +1,11 @@
-from timezonefinder import TimezoneFinder
+from sqlalchemy import Integer, Float, String
+from sqlalchemy.orm import Mapped, MappedColumn, mapped_column
+from app.database import Base
 
-from app.database import db
 
-
-class Location(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    latitude = db.Column(db.Float, nullable=False)
-    longitude = db.Column(db.Float, nullable=False)
-    location_type = db.Column(db.String(255), nullable=False)
-    order_num = db.Column(db.Integer, nullable=False)
-    timezone = db.Column(db.String(255), nullable=False)
-
-    def __init__(self, latitude, longitude, location_type, order_num):
-        self.latitude = latitude
-        self.longitude = longitude
-        self.location_type = location_type
-        self.order_num = order_num
-        self.timezone = TimezoneFinder().timezone_at(lng=longitude,
-                                                     lat=latitude)
+class Location(Base):
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    latitude: Mapped[float] = mapped_column(Float(), nullable=False)
+    longitude: Mapped[float] = mapped_column(Float(), nullable=False)
+    location_type: Mapped[str] = mapped_column(String(255), nullable=False)
+    order_number: Mapped[int] = mapped_column(Integer(), nullable=False)

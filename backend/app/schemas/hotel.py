@@ -6,3 +6,7 @@ class HotelResponseAPI(TypedDict):
     latitude: float
     longitude: float
     hotel_id: int
+
+
+class HotelResponse(HotelResponseAPI):
+    pass

@@ -8,3 +8,4 @@ class Travel(db.Model):
     end_location_id = db.Column(db.Integer, db.ForeignKey('location.id'),
                                 nullable=False)
 
+

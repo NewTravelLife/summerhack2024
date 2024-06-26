@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, List
 
-from sqlalchemy import Integer, Float, String, ForeignKey
+from sqlalchemy import Integer, Float, String, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
@@ -21,4 +21,5 @@ class Location(Base):
     travel: Mapped['Travel'] = relationship(back_populates='locations', lazy='selectin')
     travel_id: Mapped[int] = mapped_column(ForeignKey('travels.id'))
 
+    is_hotels_listed: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=False)
     hotels: Mapped[List['Hotel']] = relationship(back_populates='location', lazy='selectin')

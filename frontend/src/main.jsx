@@ -5,8 +5,18 @@ import './App.css'
 import image1 from './assets/image1.jpg';
 import image2 from './assets/image2.jpg';
 import image3 from './assets/image3.jpg';
+import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
+import L from 'leaflet';
+import openrouteservice from 'openrouteservice-js';
+import 'leaflet/dist/leaflet.css';
+import markerIcon from './assets/marker.png';
 
-
+const customIcon = new L.Icon({
+  iconUrl: markerIcon,
+  iconSize: [32, 32], // размер иконки
+  iconAnchor: [16, 32], // точка привязки, чтобы иконка указывала на точку координат
+  popupAnchor: [0, -32] // точка привязки для всплывающего окна
+});
 
 function App() {
   const [showText, setShowText] = useState(false);
@@ -122,12 +132,67 @@ function App() {
           </div>
         ))}
       </div>
+      <div>
+      <h1>Карта местности</h1>
+      <MapComponent />
+    </div>
     </div>
   );
 }
 
-export default App;
+const MapComponent = () => {
+  const [route, setRoute] = useState([]);
 
+  useEffect(() => {
+    const apiUrl = 'https://api.openrouteservice.org';
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/v2/directions/driving-car/geojson`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${"5b3ce3597851110001cf6248f65f36b127384eba95a60a1abecea503"}`,
+          },
+          body: JSON.stringify({
+            coordinates: [
+              [8.681495, 49.41461], 
+              [8.686507, 49.41943]
+
+            ],
+            radiuses: [500, 500],
+          }),
+        });
+        
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          throw new Error(`Ошибка загрузки маршрута: ${errorMessage}`);
+        }
+
+        const data = await response.json();
+        const geometry = data.routes[0].geometry.coordinates;
+        const leafletRoute = geometry.map((point) => [point[1], point[0]]);
+        setRoute(leafletRoute);
+      } catch (error) {
+        console.error('Произошла ошибка:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <MapContainer center={[8.681495, 49.41461]} zoom={13} style={{ height: '100vh', width: '100%' }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      />
+      <Marker position={[8.681495, 49.41461]} icon={customIcon}/>
+      <Marker position={[8.686507, 49.41943]} icon={customIcon}/>
+      {route.length > 0 && <Polyline positions={route} color="blue" />}
+    </MapContainer>
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

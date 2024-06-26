@@ -26,3 +26,21 @@ def add_location(lat, long, loc_type, travel_id, order_num):
     db.session.commit()
 
 
+def push_up(location_id):
+    end_location = db.Location.query.filter_by(id=location_id).first()
+    location = db.Location.query.filter_by(id=location_id).first()
+    if end_location.order_num - 1 > location.order_num:
+        location.order_num += 1
+        other_location = db.Location.query.filter_by(travel_id=location.travel_id, order_num=end_location.order_num).first()
+        other_location.order_num -= 1
+    db.session.commit()
+
+
+def push_down(location_id):
+    end_location = db.Location.query.filter_by(id=location_id).first()
+    location = db.Location.query.filter_by(id=location_id).first()
+    if end_location.order_num + 1 < location.order_num:
+        location.order_num -= 1
+        other_location = db.Location.query.filter_by(travel_id=location.travel_id, order_num=end_location.order_num).first()
+        other_location.order_num += 1
+    db.session.commit()

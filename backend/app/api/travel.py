@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 
-from app.models.travel import Travel
+from app.crud.travel import crud_get_travel_by_id, crud_create_travel
 
 api_travel = Blueprint('travel', __name__, url_prefix='/travel')
 
@@ -11,10 +11,10 @@ def get_travel(travel_id):
         return '', 400
     if not travel_id.isdigit():
         return '', 400
-    travel = Travel.query.filter_by(id=int(travel_id)).first()
+    travel = crud_get_travel_by_id(travel_id)
     if travel is None:
         return '', 404
-    return travel.to_dict(), 200
+    return travel.id, 200
 
 
 @api_travel.route('/create', methods=['POST'])
@@ -22,7 +22,7 @@ def create_travel():
     data = request.get_json()
     if data is None:
         return '', 400
-    travel = Travel.new_travel_from_dict(data)
+    travel = crud_create_travel([])
     if travel is None:
         return '', 400
     return jsonify({'id': travel.id}), 200

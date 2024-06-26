@@ -1,6 +1,6 @@
 import os
 
-from app.database import db
+from app.database import Base, db
 from app.core import app
 from app.api import blueprints
 

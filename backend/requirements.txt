@@ -3,3 +3,4 @@ Flask-SQLAlchemy==3.0.0
 psycopg2-binary==2.9.9
 Flask-Pydantic==0.11.0
 pydantic-sqlalchemy==0.0.9
+timezonefinder==6.5.2

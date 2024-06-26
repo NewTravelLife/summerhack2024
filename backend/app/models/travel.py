@@ -1,11 +1,18 @@
-from app.database import db
+from typing import List, TYPE_CHECKING
+
+from sqlalchemy import Integer
+from sqlalchemy.orm import mapped_column, Mapped, relationship
+
+from app.database import Base
+
+if TYPE_CHECKING:
+    from .location import Location
 
 
-class Travel(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    start_location_id = db.Column(db.Integer, db.ForeignKey('location.id'),
-                                  nullable=False)
-    end_location_id = db.Column(db.Integer, db.ForeignKey('location.id'),
-                                nullable=False)
+class Travel(Base):
+    __tablename__ = 'travels'
+
+    id: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    locations: Mapped[List['Location']] = relationship(back_populates='travel', lazy='selectin')
 
 

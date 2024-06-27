@@ -1,3 +1,5 @@
+from typing import List
+
 from sqlalchemy import select, and_
 
 from app.database import db
@@ -18,7 +20,7 @@ def crud_get_file_by_id(id: int) -> File | None:
     return file
 
 
-def crud_get_file_by_travel_id(travel_id: int) -> File | None:
+def crud_get_file_by_travel_id(travel_id: int) -> List[File] | None:
     stmt = select(File).where(File.travel_id == travel_id)
     file = db.session.execute(stmt).all()
     return file

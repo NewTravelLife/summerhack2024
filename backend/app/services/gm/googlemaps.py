@@ -1,4 +1,7 @@
+import logging
 import math
+from operator import itemgetter
+from pprint import pprint
 from typing import TypedDict, List, cast
 
 import googlemaps
@@ -101,4 +104,6 @@ class GoogleMaps:
             if my_type_name not in d:
                 d[my_type_name] = []
             d[my_type_name].extend(places)
+        for name in d:
+            d[name] = sorted(d[name], key=itemgetter('rating'), reverse=True)
         return d

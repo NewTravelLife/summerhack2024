@@ -1,0 +1,11 @@
+/* UploadButton.css */
+.upload-button {
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.upload-button img {
+    width: 40px; /* Устанавливаем ширину изображения */
+    height: 40px; /* Устанавливаем высоту изображения */
+}

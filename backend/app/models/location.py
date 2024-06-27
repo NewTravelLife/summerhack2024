@@ -22,8 +22,5 @@ class Location(Base):
                                             lazy='selectin')
     travel_id: Mapped[int] = mapped_column(ForeignKey('travels.id'))
 
-    is_hotels_listed: Mapped[bool] = mapped_column(Boolean(), nullable=False,
-                                                   default=False)
-
     def to_tuple(self) -> Tuple[float, float]:
         return self.latitude, self.longitude

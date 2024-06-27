@@ -1,4 +1,4 @@
-from typing import List, TYPE_CHECKING
+from typing import List, TYPE_CHECKING, Tuple
 
 from sqlalchemy import Boolean, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -27,3 +27,6 @@ class Location(Base):
                                                    default=False)
     hotels: Mapped[List['Hotel']] = relationship(back_populates='location',
                                                  lazy='selectin')
+
+    def to_tuple(self) -> Tuple[float, float]:
+        return self.longitude, self.latitude

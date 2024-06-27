@@ -8,6 +8,7 @@ import './App.css';
 import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
+import Places from "./components/places.jsx";
 import TravelDocuments from "./components/TravelDocuments.jsx";
 
 function setCords() {
@@ -154,15 +155,11 @@ function App() {
           ))}
         </select>
       </div>
-      <div className="attractions">
-        {filteredAttractions.map((attraction, index) => (
-          <div className="card" key={index}>
-            <img src={attraction.image} alt={attraction.title} className="card-image"/>
-            <h3 className="card-title">{attraction.title}</h3>
-            <p className="card-description">{attraction.description}</p>
-          </div>
-        ))}
-      </div>
+      
+        <Places/>
+        
+    
+      
       <div>
         <h1>Карта местности</h1>
         <MapComponent start={start} end={end}/>
@@ -176,6 +173,7 @@ function App() {
         <h1 Документы для поездки></h1>
         <TravelDocuments/>
       </div>
+      
 
 
     </div>

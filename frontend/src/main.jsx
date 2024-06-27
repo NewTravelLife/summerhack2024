@@ -9,19 +9,33 @@ import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
 import 'leaflet/dist/leaflet.css';
+import UploadButton from './components/UploadButton.jsx';
+
+function setCords() {
+    start = document.getElementById("startcords1").value;
+    end = document.getElementById("startcords2").value;
+}
+
 
 function App() {
   const [showText, setShowText] = useState(false);
   const [city, setCity] = useState('');
   const [filteredAttractions, setFilteredAttractions] = useState([]);
-  const start = [49.41461, 8.681495]; // начальная точка
-  const end = [49.41943, 8.686507];
   const [checked, setChecked] = useState({
     word1: false,
     word2: false,
     word3: false,
   });
 
+  const start = {
+        lat: 55.782982,
+        lng: 37.63385
+    }
+    const end = {
+        lat: 59.929984,
+        lng: 30.362158
+    }
+  
   const handleSelect = (word) => {
     setChecked((prevChecked) => ({...prevChecked, [word]:!prevChecked[word] }));
   };
@@ -101,6 +115,7 @@ function App() {
     setFilteredAttractions(filtered);
   };
 
+
   return (
     <div>
       <div className="header">
@@ -110,10 +125,43 @@ function App() {
           <button className="nav-button">Питание</button>
           <button className="nav-button">Мои путешествия</button>
           <button className="nav-button">Поделиться</button>
+          <UploadButton uploadPath="api/travel/upload_file/1"/>
           <Link to="/poisk">
             <button className="nav-button">Создать путешествие</button>
           </Link>
-        </div>
+            </div>
+            </div>
+            <div className="text-container">
+                {showText && (
+                    <div className="animated-text">
+                        С нами Ваше путешествие станет незабываемым.
+                    </div>
+                )}
+            </div>
+            <div className="input-container">
+                <select value={city} onChange={(e) => setCity(e.target.value)}>
+                    <option value="">Выберите город</option>
+                    {cities.map((cityOption, index) => (
+                        <option key={index}
+                                value={cityOption}>{cityOption}</option>
+                    ))}
+                </select>
+            </div>
+            <div className="attractions">
+                {filteredAttractions.map((attraction, index) => (
+                    <div className="card" key={index}>
+                        <img src={attraction.image} alt={attraction.title}
+                             className="card-image"/>
+                        <h3 className="card-title">{attraction.title}</h3>
+                        <p className="card-description">{attraction.description}</p>
+                    </div>
+                ))}
+            </div>
+            <div>
+                <h1>Карта местности</h1>
+                <MapComponent origin={start} destination={end}/>
+            </div>
+          </div>
       </div>
       
       <div className="text-container">

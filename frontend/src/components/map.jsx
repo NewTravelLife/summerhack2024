@@ -1,57 +1,94 @@
-import {useEffect, useState} from "react";
-import {MapContainer, Marker, Polyline, TileLayer} from "react-leaflet";
-import L from "leaflet";
-import markerIcon from "../assets/marker.png";
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+    DirectionsRenderer,
+    DirectionsService,
+    GoogleMap,
+    LoadScript
+} from '@react-google-maps/api';
 
-const customIcon = new L.Icon({
-    iconUrl: markerIcon,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -32]
-});
-
-const MapComponent = ({start, end}) => {
-    const [route, setRoute] = useState([]);
-
+const MapComponent = ({}) => {
+    const [response, setResponse] = useState(null);
+    const [directionsServiceActive, setDirectionsServiceActive] = useState(true);
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [inputOrigin, setInputOrigin] = useState('');
+    const [inputDestination, setInputDestination] = useState('');
+    const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; // Если не запускается - укажите ключ напрямую (не забудьте удалить при коммите)
+  
+    const directionsCallback = useCallback((res) => {
+      if (res !== null) {
+        if (res.status === 'OK') {
+          setResponse(res);
+          setDirectionsServiceActive(false);  // Stop the service after getting a response
+        } else {
+          console.log('response: ', res);
+        }
+      }
+    }, []);
+  
     useEffect(() => {
-        const apiUrl = 'https://api.openrouteservice.org';
+      if (origin && destination) {
+        setDirectionsServiceActive(true);
+      }
+    }, [origin, destination]);
 
-        const fetchData = async () => {
-            fetch(`${apiUrl}/v2/directions/driving-car/geojson`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer 5b3ce3597851110001cf6248f65f36b127384eba95a60a1abecea503`,
-                },
-                body: JSON.stringify({
-                    coordinates: [
-                        start, end
-                    ],
-                    radiuses: [500, 500],
-                }),
-            }).then(response => response.json())
-                .then(data => {
-                    setRoute(data.features[0].geometry.coordinates);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        };
-        fetchData();
-    }, [start, end]);
+    const handleClick = () => {
+      setOrigin(inputOrigin);
+      setDestination(inputDestination);
+    };
 
     return (
-        <MapContainer center={start} zoom={13}
-                      style={{height: '100vh', width: '100%'}}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      <>
+      <div>
+      <input
+        type="text"
+        placeholder="Enter origin coordinates (lat,lng)"
+        value={inputOrigin}
+        onChange={(e) => setInputOrigin(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Enter destination coordinates (lat,lng)"
+        value={inputDestination}
+        onChange={(e) => setInputDestination(e.target.value)}
+      />
+      <button onClick={handleClick}>Get Directions</button>
+      </div>
+      <LoadScript googleMapsApiKey={apiKey}>
+        <GoogleMap
+          id="direction-example"
+          mapContainerStyle={{
+            height: '800px',
+            width: '1250px'
+          }}
+          zoom={7}
+          center={{
+            lat: 41.85073,
+            lng: -87.65126
+          }}
+        >
+          {directionsServiceActive && origin && destination && (
+            <DirectionsService
+              options={{
+                destination: destination,
+                origin: origin,
+                travelMode: 'DRIVING'
+              }}
+              callback={directionsCallback}
             />
-            <Marker position={start} icon={customIcon}/>
-            <Marker position={end} icon={customIcon}/>
-            {route.length > 0 && <Polyline positions={route} color="blue"/>}
-        </MapContainer>
+          )}
+
+          {response && (
+            <DirectionsRenderer
+              options={{
+                directions: response
+              }}
+            />
+          )}
+        </GoogleMap>
+      </LoadScript>
+      </>
     );
-};
+  };
 
 export default MapComponent;

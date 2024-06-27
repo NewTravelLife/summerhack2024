@@ -150,9 +150,8 @@ function App() {
           </div>
         ))}
       </div>
-           
-        </div>
-    );
+
+
 
         <Places/>
         
@@ -174,7 +173,7 @@ function App() {
       
 
 
-    </div>
+      </div>
   );
 
 

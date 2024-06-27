@@ -1,3 +1,19 @@
+import os
+import uuid
+from typing import cast
+
+from flask import Blueprint, current_app, jsonify, request
+
+from app.crud.file import crud_create_file, \
+    crud_get_file_by_original_name_and_travel_id, crud_get_file_by_travel_id
+from app.crud.location import crud_create_location, crud_get_location_by_id
+from app.crud.travel import crud_create_travel, crud_get_travel_by_id
+from app.database import db
+from app.schemas.travel import TravelCreateRequest, TravelCreateResponse, \
+    TravelGetLocationsResponse, TravelGetRouteWithPlaces, TravelLocation
+from app.services.disk import ProjectDisk
+from app.services.gm.googlemaps import GoogleMaps
+
 api_travel = Blueprint('travel', __name__, url_prefix='/travel')
 
 
@@ -8,10 +24,14 @@ def get_locations(travel_id: int):
     travel = crud_get_travel_by_id(travel_id)
     if travel is None:
         return '', 404
-    response: TravelGetLocationsResponse = TravelGetLocationsResponse(locations=[])
+    response: TravelGetLocationsResponse = TravelGetLocationsResponse(
+        locations=[])
     for location in travel.locations:
-        response['locations'].append(TravelLocation(id=int(location.id), latitude=location.latitude,
-            longitude=location.longitude, location_type=location.location_type, order_number=location.order_number))
+        response['locations'].append(
+            TravelLocation(id=int(location.id), latitude=location.latitude,
+                           longitude=location.longitude,
+                           location_type=location.location_type,
+                           order_number=location.order_number))
     return jsonify(response), 200
 
 
@@ -25,7 +45,8 @@ def get_route_with_places(travel_id: int):
     places = client.get_places_along_route(route)
     if len(places) < 1:
         return '', 404
-    response: TravelGetRouteWithPlaces = TravelGetRouteWithPlaces(places=places, route=route)
+    response: TravelGetRouteWithPlaces = TravelGetRouteWithPlaces(
+        places=places, route=route)
     return jsonify(response), 200
 
 
@@ -36,9 +57,11 @@ def create_travel():
         return '', 400
     data = cast(TravelCreateRequest, data)
     travel = crud_create_travel([])
-    crud_create_location(data['start_lat'], data['start_lon'], 'start', 0, travel)
+    crud_create_location(data['start_lat'], data['start_lon'], 'start', 0,
+                         travel)
     crud_create_location(data['end_lat'], data['end_lon'], 'end', 1, travel)
-    response: TravelCreateResponse = TravelCreateResponse(travel_id=int(travel.id))
+    response: TravelCreateResponse = TravelCreateResponse(
+        travel_id=int(travel.id))
     return jsonify(response), 200
     if travel is None:
         return '', 400
@@ -57,7 +80,7 @@ def upload_file(travel_id):
     file = request.files['file']
     if file is None:
         return '', 400
-    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename)
     file.save(path)
     project_disk = ProjectDisk()
     disk_name = str(uuid.uuid4())
@@ -112,4 +135,4 @@ def set_locations(travel_id):
         location = crud_get_location_by_id(set_location['id'])
         location.order_number = set_location['order_number']
     db.session.commit()
-   
+    return '', 200

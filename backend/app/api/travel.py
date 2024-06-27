@@ -1,7 +1,10 @@
+from typing import cast
+
 from flask import Blueprint, request, jsonify, current_app
 
 from app.crud.location import crud_create_location
 from app.crud.travel import crud_get_travel_by_id, crud_create_travel
+from app.schemas.travel import TravelCreateRequest, TravelCreateResponse
 from app.services.gm.googlemaps import GoogleMaps
 
 api_travel = Blueprint('travel', __name__, url_prefix='/travel')
@@ -35,13 +38,12 @@ def get_travel(travel_id):
 @api_travel.route('/create', methods=['POST'])
 def create_travel():
     data = request.get_json()
-    if data is None:
+    if data is None or not isinstance(data, TravelCreateRequest):
         return '', 400
+    data = cast(TravelCreateRequest, data)
     travel = crud_create_travel([])
-    if travel is None:
-        return '', 400
-    crud_create_location(18.9406074, 49.718937, '1', 1, travel)
-    crud_create_location(18.9651545, 47.4810949, '1', 2, travel)
-
-    return jsonify({'id': travel.id}), 200
+    crud_create_location(data['start_lat'], data['start_lon'], 'start', 1, travel)
+    crud_create_location(data['end_lat'], data['end_lon'], 'end', 2, travel)
+    response: TravelCreateResponse = {'travel_id': int(travel.id)}
+    return jsonify(response), 200
 

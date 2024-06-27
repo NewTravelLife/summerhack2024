@@ -6,11 +6,25 @@ import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import 'leaflet/dist/leaflet.css';
 import MapComponent from "./components/map.jsx";
+import UploadButton from './components/UploadButton.jsx';
+
+function setCords() {
+    start = document.getElementById("startcords1").value;
+    end = document.getElementById("startcords2").value;
+}
 
 function App() {
     const [showText, setShowText] = useState(false);
     const [city, setCity] = useState('');
     const [filteredAttractions, setFilteredAttractions] = useState([]);
+    const [uploadedFile, setUploadedFile] = useState(null);
+
+
+    const handleFileUpload = (file) => {
+        setUploadedFile(file);
+        console.log('Загруженный файл:', file);
+      };
+
     const start = {
         lat: 55.782982,
         lng: 37.63385
@@ -102,6 +116,7 @@ function App() {
                     <button className="nav-button">Жильё</button>
                     <button className="nav-button">Питание</button>
                     <button className="nav-button">Мои путешествия</button>
+                    <UploadButton onFileUpload={handleFileUpload}/> {/* Кнопка для загрузки файлов */}
                 </div>
             </div>
             <div className="text-container">

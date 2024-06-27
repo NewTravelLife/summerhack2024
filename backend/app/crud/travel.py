@@ -19,4 +19,3 @@ def crud_get_travel_by_id(id: int) -> Travel | None:
     stmt = select(Travel).where(Travel.id == id)
     travel = db.session.scalar(stmt)
     return travel
-

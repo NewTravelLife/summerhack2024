@@ -1,5 +1,8 @@
+import os
+
 from flask import Blueprint, request, jsonify
 
+from app.core import app
 from app.crud.travel import crud_get_travel_by_id, crud_create_travel
 
 api_travel = Blueprint('travel', __name__, url_prefix='/travel')
@@ -26,3 +29,16 @@ def create_travel():
     if travel is None:
         return '', 400
     return jsonify({'id': travel.id}), 200
+
+
+@api_travel.route('/upload_file/<travel_id>', methods=['POST'])
+def upload_file(travel_id):
+    if travel_id is None:
+        return '', 400
+    if not travel_id.isdigit():
+        return '', 400
+    file = request.files['file']
+    if file is None:
+        return '', 400
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+    return '', 200

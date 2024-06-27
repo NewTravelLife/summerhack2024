@@ -30,6 +30,7 @@ services:
   app:
     build: ./backend
     command: "python -m app"
+    env_file: "backend/.env"
     depends_on:
       db:
         condition: service_healthy

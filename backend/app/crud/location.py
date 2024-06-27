@@ -1,16 +1,20 @@
+from sqlalchemy import select
+
 from app.database import db
 from app.models.location import Location
+from app.models.travel import Travel
 
 
-def new_location_from_dict(data) -> Location | None:
-    if type(data) is not dict:
-        return None
-    if 'latitude' not in data or 'longitude' not in data:
-        return None
-    if data['latitude'] is None or data['longitude'] is None:
-        return None
-    location = Location(latitude=data['latitude'],
-                        longitude=data['longitude'])
+def crud_create_location(latitude: float, longitude: float, location_type: str, order_number: int, travel: Travel) -> Location:
+    location = Location(latitude=latitude, longitude=longitude, location_type=location_type, order_number=order_number,
+                        is_hotels_listed=False, hotels=[], travel=travel)
     db.session.add(location)
     db.session.commit()
+    db.session.refresh(location)
+    return location
+
+
+def crud_get_location_by_id(id: int) -> Location | None:
+    stmt = select(Location).where(Location.id == id)
+    location = db.session.scalar(stmt)
     return location

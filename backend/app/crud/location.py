@@ -10,7 +10,7 @@ from app.models.travel import Travel
 def crud_create_location(latitude: float, longitude: float, location_type: str, order_number: int,
                          travel: Travel) -> Location:
     location = Location(latitude=latitude, longitude=longitude, location_type=location_type, order_number=order_number,
-                        is_hotels_listed=False, travel=travel)
+                        travel=travel)
     db.session.add(location)
     db.session.commit()
     db.session.refresh(location)

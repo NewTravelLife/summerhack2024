@@ -7,9 +7,14 @@ import './App.css';
 import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
+
 import 'leaflet/dist/leaflet.css';
 import MapComponent from "./components/map.jsx";
 import UploadButton from './components/UploadButton.jsx';
+
+import Places from "./components/places.jsx";
+import TravelDocuments from "./components/TravelDocuments.jsx";
+
 
 function setCords() {
     start = document.getElementById("startcords1").value;
@@ -116,11 +121,8 @@ function App() {
       <div className="header">
         <div className="project-name">newtravel.life</div>
         <div className="nav-buttons">
-          <button className="nav-button">Жильё</button>
-          <button className="nav-button">Питание</button>
-          <button className="nav-button">Мои путешествия</button>
           <button className="nav-button">Поделиться</button>
-          <UploadButton uploadPath="api/travel/upload_file/1"/>
+
           <Link to="/poisk">
             <button className="nav-button">Создать путешествие</button>
           </Link>
@@ -138,6 +140,7 @@ function App() {
           ))}
         </select>
       </div>
+
       <div className="attractions">
         {filteredAttractions.map((attraction, index) => (
           <div className="card" key={index}>
@@ -150,6 +153,30 @@ function App() {
            
         </div>
     );
+
+        <Places/>
+        
+    
+      
+      <div>
+        <h1>Карта местности</h1>
+        <MapComponent start={start} end={end}/>
+      </div>
+      <div>
+            <h1>Температура сейчас:</h1>
+            {temperature !== null ? (<p>{temperature} °C</p>) :
+                (<p>Загрузка...</p>)}
+          </div>
+      <div>
+        <h1 Документы для поездки></h1>
+        <TravelDocuments/>
+      </div>
+      
+
+
+    </div>
+  );
+
 
 }
 

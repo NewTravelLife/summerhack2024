@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, and_
 
 from app.database import db
 from app.models import File, Travel
@@ -24,8 +24,8 @@ def crud_get_file_by_travel_id(travel_id: int) -> File | None:
     return file
 
 
-def crud_get_file_by_original_name(original_name: int) -> File | None:
-    stmt = select(File).where(File.original_name == original_name)
+def crud_get_file_by_original_name_and_travel_id(original_name: int, travel_id: int) -> File | None:
+    stmt = select(File).where(and_(File.original_name == original_name, File.travel_id == travel_id))
     file = db.session.execute(stmt)
     return file
 

@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify
 
 from app.core import app
 from app.crud.travel import crud_get_travel_by_id, crud_create_travel
-from app.crud.file import crud_create_file, crud_get_file_by_travel_id
+from app.crud.file import crud_create_file, crud_get_file_by_travel_id, crud_get_file_by_original_name_and_travel_id
 from app.services.disk import ProjectDisk
 
 api_travel = Blueprint('travel', __name__, url_prefix='/travel')
@@ -46,7 +46,8 @@ def upload_file(travel_id):
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
     project_disk = ProjectDisk()
     disk_name = str(uuid.uuid4())
-    project_disk.upload_to_bucket(disk_name, file.filename)
+    project_disk.upload_to_bucket(disk_name, os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.filename))
+    os.remove(os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.filename))
     crud_create_file(disk_name, file.filename, travel_id)
     return '', 200
 
@@ -58,7 +59,23 @@ def get_files(travel_id):
     if not travel_id.isdigit():
         return '', 400
     files = crud_get_file_by_travel_id(travel_id)
-    origin_files = [file.original_name for file in files]
+    original_files = [file.original_name for file in files]
     if files is None:
         return '', 404
-    return jsonify(origin_files), 200
+    return jsonify(original_files), 200
+
+
+@api_travel.route('/download_file/<travel_id>/<original_name>', methods=['GET'])
+def download_file(travel_id, original_name):
+    if travel_id is None:
+        return '', 400
+    if not travel_id.isdigit():
+        return '', 400
+    if original_name is None:
+        return '', 400
+    project_disk = ProjectDisk()
+    file = crud_get_file_by_original_name_and_travel_id(original_name, travel_id)
+    if file is None:
+        return '', 404
+    project_disk.download_from_bucket(file.disk_name, os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.disk_name))
+    return '', 200

@@ -25,7 +25,7 @@
 }
 
 .button-container {
-    position: absolute; /* Абсолютное позиционирование */
+    position: relative; /* Абсолютное позиционирование */
     top: 10px; /* Отступ сверху */
     right: 10px; /* Отступ справа */
     display: flex}

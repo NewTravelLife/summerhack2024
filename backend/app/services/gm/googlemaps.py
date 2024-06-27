@@ -30,7 +30,7 @@ class GoogleMaps:
     def find_nearest(self, latitude, longitude, my_type, radius=1000):
         places_result = self.gmaps.places_nearby(
             location=(latitude, longitude),
-            radius=radius, type=my_type),
+            radius=radius, type=my_type)
         places = []
         if 'results' in places_result:
             for place in places_result['results']:
@@ -42,7 +42,6 @@ class GoogleMaps:
                     'location': place.get('geometry', {}).get('location'),
                 }
                 places.append(place_info)
-
         return places
 
     def get_direction(self, travel: Travel):

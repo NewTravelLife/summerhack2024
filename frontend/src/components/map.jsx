@@ -6,9 +6,13 @@ import {
     LoadScript
 } from '@react-google-maps/api';
 
-const MapComponent = ({ origin, destination }) => {
+const MapComponent = ({}) => {
     const [response, setResponse] = useState(null);
     const [directionsServiceActive, setDirectionsServiceActive] = useState(true);
+    const [origin, setOrigin] = useState('');
+    const [destination, setDestination] = useState('');
+    const [inputOrigin, setInputOrigin] = useState('');
+    const [inputDestination, setInputDestination] = useState('');
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; // Если не запускается - укажите ключ напрямую (не забудьте удалить при коммите)
   
     const directionsCallback = useCallback((res) => {
@@ -27,8 +31,29 @@ const MapComponent = ({ origin, destination }) => {
         setDirectionsServiceActive(true);
       }
     }, [origin, destination]);
-  
+
+    const handleClick = () => {
+      setOrigin(inputOrigin);
+      setDestination(inputDestination);
+    };
+
     return (
+      <>
+      <div>
+      <input
+        type="text"
+        placeholder="Enter origin coordinates (lat,lng)"
+        value={inputOrigin}
+        onChange={(e) => setInputOrigin(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Enter destination coordinates (lat,lng)"
+        value={inputDestination}
+        onChange={(e) => setInputDestination(e.target.value)}
+      />
+      <button onClick={handleClick}>Get Directions</button>
+      </div>
       <LoadScript googleMapsApiKey={apiKey}>
         <GoogleMap
           id="direction-example"
@@ -52,7 +77,7 @@ const MapComponent = ({ origin, destination }) => {
               callback={directionsCallback}
             />
           )}
-  
+
           {response && (
             <DirectionsRenderer
               options={{
@@ -62,6 +87,7 @@ const MapComponent = ({ origin, destination }) => {
           )}
         </GoogleMap>
       </LoadScript>
+      </>
     );
   };
 

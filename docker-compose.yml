@@ -42,6 +42,7 @@ services:
       DB_NAME: PROD
       PORT: 8888
       HOST: "0.0.0.0"
+      UPLOAD_FOLDER: "/tmp"
     volumes:
       - ./backend:/app
   nginx:

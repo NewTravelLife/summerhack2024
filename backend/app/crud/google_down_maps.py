@@ -1,7 +1,10 @@
 import math
+from pprint import pprint
 
 import googlemaps
+from flask import current_app
 
+from app.core import app
 from app.crud.location import crud_get_first_location_by_travel, \
     crud_get_ordered_locations_by_travel
 from app.models.travel import Travel
@@ -29,7 +32,7 @@ class GoogleMaps:
     def find_nearest(self, latitude, longitude, my_type, radius=1000):
         places_result = self.gmaps.places_nearby(
             location=(latitude, longitude),
-            radius=radius, type=my_type)
+            radius=radius, type=my_type),
         places = []
         if 'results' in places_result:
             for place in places_result['results']:
@@ -39,7 +42,6 @@ class GoogleMaps:
                     'rating': place.get('rating'),
                     'user_ratings_total': place.get('user_ratings_total'),
                     'location': place.get('geometry', {}).get('location'),
-                    'type': place.get('types'),
                 }
                 places.append(place_info)
 
@@ -78,24 +80,47 @@ class GoogleMaps:
 
     def get_places_along_route(self, route_coords, search_radius=1000,
                                step_distance=10):
-        places = []
-        prev_coords = None
-        for coords in route_coords:
-            if prev_coords is not None:
-                dist = self.distance(prev_coords['lat'], prev_coords['lng'],
-                                     coords['lat'], coords['lng'])
-                if dist >= step_distance:
-                    places.extend(
-                        self.find_nearest(coords['lat'],
-                                          coords['lng'],
-                                          self.INTERSTED_TYPES, search_radius))
-                    prev_coords = coords
-            else:
-                prev_coords = coords
-        if not places and route_coords:
-            places.extend(self.find_nearest(route_coords[-1]['lat'],
-                                            route_coords[-1]['lng'],
-                                            self.INTERSTED_TYPES,
-                                            search_radius))
         d = {}
+        for my_type in self.INTERSTED_TYPES:
+            places = []
+            prev_coords = None
+            for coords in route_coords:
+                if prev_coords is not None:
+                    dist = self.distance(prev_coords['lat'],
+                                         prev_coords['lng'],
+                                         coords['lat'], coords['lng'])
+                    if dist >= step_distance:
+                        places.extend(
+                            self.find_nearest(coords['lat'],
+                                              coords['lng'],
+                                              my_type,
+                                              search_radius))
+                        prev_coords = coords
+                else:
+                    prev_coords = coords
+            if not places and route_coords:
+                places.extend(self.find_nearest(route_coords[-1]['lat'],
+                                                route_coords[-1]['lng'],
+                                                my_type,
+                                                search_radius))
+            my_type_name = self.INTERSTED_TYPES_NAMES[my_type]
+            if my_type_name not in d:
+                d[my_type_name] = []
+            d[my_type_name].extend(places)
         return d, route_coords
+
+
+# with app.app_context():
+#     api_key = current_app.config[
+#         'GOOGLE_MAPS_API_KEY']  # Replace with your actual API key
+#     start_location = {
+#         "lat": 55.743926,
+#         "lng": 37.614491
+#     }
+#     end_location = {
+#         "lat": 55.729832,
+#         "lng": 37.611938
+#     }
+#     client = GoogleMaps(api_key)
+#     route = client.get_places_along_route([start_location, end_location])
+#     pprint(route)

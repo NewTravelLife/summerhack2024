@@ -1,7 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   
-  background-color: #d9e49a;
   position: absolute;
   top: -32px;
 
@@ -10,7 +9,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body{
+  background: linear-gradient(180deg, #56CCF2 0%, #F2F2F2 100%);
+  background-attachment: fixed;
 
+}
 a {
   font-weight: 500;
   color: #646cff;

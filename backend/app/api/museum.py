@@ -10,12 +10,10 @@ api_museum = Blueprint('museum', __name__, url_prefix='/museum')
 @api_museum.route('/get/<travel_id>', methods=['GET'])
 def get_museums_along_route(travel_id):
     travel = crud_get_travel_by_id(travel_id)
-    start_location = crud_get_first_location_by_travel(travel).to_tuple().to_tuple()
-    end_location = crud_get_first_location_by_travel(travel).to_tuple()
     if travel is None:
         return '', 400
     client = GoogleMaps(current_app.config['GOOGLE_MAPS_API_KEY'])
-    route = client.get_direction(start_location, end_location)
+    route = client.get_direction(travel)
     museums = client.get_places_along_route(route, 'museum')
     if len(museums) < 1:
         return '', 404

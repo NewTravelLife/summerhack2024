@@ -10,12 +10,10 @@ api_restaurant = Blueprint('restaurant', __name__, url_prefix='/restaurant')
 @api_restaurant.route('/get/<travel_id>', methods=['GET'])
 def get_restaurants_along_route(travel_id):
     travel = crud_get_travel_by_id(travel_id)
-    start_location = crud_get_first_location_by_travel(travel)
-    end_location = crud_get_last_location_by_travel(travel)
     if travel is None:
         return '', 400
     client = GoogleMaps()
-    route = client.get_direction(start_location, end_location)
+    route = client.get_direction(travel)
     restaurants = client.get_places_along_route(route, ('cafe','restaurant'))
     if len(restaurants) < 1:
         return '', 404

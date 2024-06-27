@@ -2,7 +2,8 @@ import math
 
 import googlemaps
 
-from app.crud.location import crud_get_first_location_by_travel, crud_get_last_location_by_travel
+from app.crud.location import crud_get_first_location_by_travel, crud_get_last_location_by_travel, \
+    crud_get_ordered_locations_by_travel
 from app.models.travel import Travel
 
 
@@ -31,7 +32,8 @@ class GoogleMaps:
     def get_direction(self, travel: Travel):
         start_point = crud_get_first_location_by_travel(travel).to_tuple()
         end_point = crud_get_first_location_by_travel(travel).to_tuple()
-        directions = self.gmaps.directions(start_point, end_point)
+        locations = [location.to_tuple() for location in crud_get_ordered_locations_by_travel(travel)[1:-1]]
+        directions = self.gmaps.directions(start_point, end_point, waypoints=locations)
         # Получение координат маршрута
         route_coords = []
         for step in directions[0]['legs'][0]['steps']:

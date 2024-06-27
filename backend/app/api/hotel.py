@@ -32,12 +32,10 @@ def get_hotels_by_location_id(location_id):
 @api_hotel.route('/get_along_route/<travel_id>', methods=['GET'])
 def get_hotels_along_route(travel_id):
     travel = crud_get_travel_by_id(travel_id)
-    start_location = crud_get_first_location_by_travel(travel).to_tuple()
-    end_location = crud_get_first_location_by_travel(travel).to_tuple()
     if travel is None:
         return '', 400
     client = GoogleMaps(current_app.config['GOOGLE_MAPS_API_KEY'])
-    route = client.get_direction(start_location, end_location)
+    route = client.get_direction(travel)
     hotels = client.get_places_along_route(route, 'lodging')
     if len(hotels) < 1:
         return '', 404

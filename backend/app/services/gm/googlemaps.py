@@ -1,12 +1,10 @@
 import math
-from pprint import pprint
+from typing import TypedDict
 
 import googlemaps
-from flask import current_app
 
-from app.core import app
-from app.crud.location import crud_get_first_location_by_travel, \
-    crud_get_ordered_locations_by_travel
+from app.crud.location import crud_get_first_location_by_travel, crud_get_ordered_locations_by_travel, \
+    crud_get_last_location_by_travel
 from app.models.travel import Travel
 
 
@@ -26,7 +24,7 @@ class GoogleMaps:
         'lodging': 'hotel',
     }
 
-    def __init__(self, api_key):
+    def __init__(self, api_key: str):
         self.gmaps = googlemaps.Client(key=api_key)
 
     def find_nearest(self, latitude, longitude, my_type, radius=1000):
@@ -49,12 +47,10 @@ class GoogleMaps:
 
     def get_direction(self, travel: Travel):
         start_point = crud_get_first_location_by_travel(travel).to_tuple()
-        end_point = crud_get_first_location_by_travel(travel).to_tuple()
+        end_point = crud_get_last_location_by_travel(travel).to_tuple()
         locations = [location.to_tuple() for location in
                      crud_get_ordered_locations_by_travel(travel)[1:-1]]
-        directions = self.gmaps.directions(start_point, end_point,
-                                           waypoints=locations)
-        # Получение координат маршрута
+        directions = self.gmaps.directions(start_point, end_point, locations)
         route_coords = []
         for step in directions[0]['legs'][0]['steps']:
             polyline = step['polyline']['points']
@@ -79,7 +75,7 @@ class GoogleMaps:
         return R * c
 
     def get_places_along_route(self, route_coords, search_radius=1000,
-                               step_distance=10):
+                               step_distance=1000):
         d = {}
         for my_type in self.INTERSTED_TYPES:
             places = []
@@ -107,20 +103,4 @@ class GoogleMaps:
             if my_type_name not in d:
                 d[my_type_name] = []
             d[my_type_name].extend(places)
-        return d, route_coords
-
-
-# with app.app_context():
-#     api_key = current_app.config[
-#         'GOOGLE_MAPS_API_KEY']  # Replace with your actual API key
-#     start_location = {
-#         "lat": 55.743926,
-#         "lng": 37.614491
-#     }
-#     end_location = {
-#         "lat": 55.729832,
-#         "lng": 37.611938
-#     }
-#     client = GoogleMaps(api_key)
-#     route = client.get_places_along_route([start_location, end_location])
-#     pprint(route)
+        return d

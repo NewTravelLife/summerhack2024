@@ -26,4 +26,4 @@ class Location(Base):
                                                    default=False)
 
     def to_tuple(self) -> Tuple[float, float]:
-        return self.longitude, self.latitude
+        return self.latitude, self.longitude

@@ -26,7 +26,7 @@ def crud_get_file_by_travel_id(travel_id: int) -> List[File] | None:
     return file
 
 
-def crud_get_file_by_original_name_and_travel_id(original_name: int, travel_id: int) -> File | None:
+def crud_get_file_by_original_name_and_travel_id(original_name: str, travel_id: int) -> File | None:
     stmt = select(File).where(and_(File.original_name == original_name, File.travel_id == travel_id))
     file = db.session.execute(stmt)
     return file

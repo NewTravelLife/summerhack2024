@@ -1,11 +1,12 @@
 import math
-from typing import TypedDict
+from typing import TypedDict, List, cast
 
 import googlemaps
 
 from app.crud.location import crud_get_first_location_by_travel, crud_get_ordered_locations_by_travel, \
     crud_get_last_location_by_travel
 from app.models.travel import Travel
+from app.schemas.travel import TravelPlace, TravelRoutePoint
 
 
 class GoogleMaps:
@@ -27,34 +28,32 @@ class GoogleMaps:
     def __init__(self, api_key: str):
         self.gmaps = googlemaps.Client(key=api_key)
 
-    def find_nearest(self, latitude, longitude, my_type, radius=1000):
+    def find_nearest(self, latitude, longitude, my_type, radius=1000) -> List[TravelPlace]:
         places_result = self.gmaps.places_nearby(
             location=(latitude, longitude),
             radius=radius, type=my_type)
         places = []
         if 'results' in places_result:
             for place in places_result['results']:
-                place_info = {
-                    'name': place.get('name'),
-                    'address': place.get('vicinity'),
-                    'rating': place.get('rating'),
-                    'user_ratings_total': place.get('user_ratings_total'),
-                    'location': place.get('geometry', {}).get('location'),
-                }
+                place_info = TravelPlace(name=place.get('name'),
+                                         address=place.get('vicinity'),
+                                         rating=place.get('rating'),
+                                         user_ratings_total=place.get('user_ratings_total'),
+                                         location=TravelRoutePoint(**place.get('geometry', {}).get('location')))
                 places.append(place_info)
         return places
 
-    def get_direction(self, travel: Travel):
+    def get_direction(self, travel: Travel) -> List[TravelRoutePoint]:
         start_point = crud_get_first_location_by_travel(travel).to_tuple()
         end_point = crud_get_last_location_by_travel(travel).to_tuple()
         locations = [location.to_tuple() for location in
                      crud_get_ordered_locations_by_travel(travel)[1:-1]]
         directions = self.gmaps.directions(start_point, end_point, locations)
-        route_coords = []
+        route_coords: List[TravelRoutePoint] = []
         for step in directions[0]['legs'][0]['steps']:
             polyline = step['polyline']['points']
             coords = googlemaps.convert.decode_polyline(polyline)
-            route_coords.extend(coords)
+            route_coords.extend(cast(TravelRoutePoint, coords))
         return route_coords
 
     @staticmethod

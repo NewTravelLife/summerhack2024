@@ -24,12 +24,12 @@ class TravelGetLocationsResponse(TypedDict):
     locations: List[TravelLocation]
 
 
-class TravelRoutePoint:
+class TravelRoutePoint(TypedDict):
     lat: float
-    lot: float
+    lng: float
 
 
-class TravelPlace:
+class TravelPlace(TypedDict):
     address: str
     location: TravelRoutePoint
     name: str

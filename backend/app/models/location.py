@@ -1,12 +1,12 @@
-from typing import TYPE_CHECKING, List
+from typing import List, TYPE_CHECKING, Tuple
 
-from sqlalchemy import Integer, Float, String, ForeignKey, Boolean
+from sqlalchemy import Boolean, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.database import Base
+
+from app.database import Base, db
 
 if TYPE_CHECKING:
     from .travel import Travel
-    from .hotel import Hotel
 
 
 class Location(Base):
@@ -18,8 +18,9 @@ class Location(Base):
     location_type: Mapped[str] = mapped_column(String(255), nullable=False)
     order_number: Mapped[int] = mapped_column(Integer(), nullable=False)
 
-    travel: Mapped['Travel'] = relationship(back_populates='locations', lazy='selectin')
+    travel: Mapped['Travel'] = relationship(back_populates='locations',
+                                            lazy='selectin')
     travel_id: Mapped[int] = mapped_column(ForeignKey('travels.id'))
 
-    is_hotels_listed: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=False)
-    hotels: Mapped[List['Hotel']] = relationship(back_populates='location', lazy='selectin')
+    def to_tuple(self) -> Tuple[float, float]:
+        return self.latitude, self.longitude

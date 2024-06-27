@@ -1,6 +1,6 @@
 from typing import List
 
-from flask import Blueprint
+from flask import Blueprint, current_app
 from flask import jsonify
 from app.crud.hotel import crud_get_hotels_by_location, crud_is_hotels_listed_by_location, crud_list_hotels_by_location, \
     crud_set_hotels_listed_by_location
@@ -36,7 +36,7 @@ def get_hotels_along_route(travel_id):
     end_location = crud_get_last_location_by_travel(travel)
     if travel is None:
         return '', 400
-    client = GoogleMaps()
+    client = GoogleMaps(current_app.config['GOOGLE_MAPS_API_KEY'])
     route = client.get_direction(start_location, end_location)
     hotels = client.get_places_along_route(route, 'lodging')
     if len(hotels) < 1:

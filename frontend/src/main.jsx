@@ -21,6 +21,7 @@ function App() {
   const [showText, setShowText] = useState(false);
   const [city, setCity] = useState('');
   const [filteredAttractions, setFilteredAttractions] = useState([]);
+  const [temperature, setTemperature] = useState(null);
   const [checked, setChecked] = useState({
     word1: false,
     word2: false,
@@ -35,6 +36,7 @@ function App() {
         lat: 59.929984,
         lng: 30.362158
     }
+
   
   const handleSelect = (word) => {
     setChecked((prevChecked) => ({...prevChecked, [word]:!prevChecked[word] }));
@@ -48,6 +50,19 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+
+    useEffect(() => {
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
+          .then((response) => response.json()) // Преобразуем ответ в JSON
+          .then((data) => {
+            if (data && data.current) {
+              setTemperature(data.current.temperature_2m); // Устанавливаем температуру в состояние
+            } else {
+                console.log("Ошибка загрузки температуры.");
+            }
+          })
+      }, []);
+  
   useEffect(() => {
     filterAttractions(city);
   }, [city]);
@@ -114,7 +129,7 @@ function App() {
     }).filter(attraction => attraction!== null);
     setFilteredAttractions(filtered);
   };
-
+    
 
   return (
     <div>
@@ -131,39 +146,6 @@ function App() {
           </Link>
             </div>
             </div>
-            <div className="text-container">
-                {showText && (
-                    <div className="animated-text">
-                        С нами Ваше путешествие станет незабываемым.
-                    </div>
-                )}
-            </div>
-            <div className="input-container">
-                <select value={city} onChange={(e) => setCity(e.target.value)}>
-                    <option value="">Выберите город</option>
-                    {cities.map((cityOption, index) => (
-                        <option key={index}
-                                value={cityOption}>{cityOption}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="attractions">
-                {filteredAttractions.map((attraction, index) => (
-                    <div className="card" key={index}>
-                        <img src={attraction.image} alt={attraction.title}
-                             className="card-image"/>
-                        <h3 className="card-title">{attraction.title}</h3>
-                        <p className="card-description">{attraction.description}</p>
-                    </div>
-                ))}
-            </div>
-            <div>
-                <h1>Карта местности</h1>
-                <MapComponent origin={start} destination={end}/>
-            </div>
-          </div>
-      </div>
-      
       <div className="text-container">
         <div className="animated-text">
           С нами Ваше путешествие станет незабываемым
@@ -189,10 +171,16 @@ function App() {
         <h1>Карта местности</h1>
         <MapComponent start={start} end={end}/>
       </div>
-    </div>
-  );
-}
+      <div>
+            <h1>Температура сейчас:</h1>
+            {temperature !== null ? (<p>{temperature} °C</p>) :
+                (<p>Загрузка...</p>)}
+          </div>
+            
+        </div>
+    );
 
+}
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

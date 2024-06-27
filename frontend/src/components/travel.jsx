@@ -1,4 +1,5 @@
-import {useState} from "react";
+
+import React, { useState } from 'react';
 
 const Travel = ({travel_id}) => {
     const [travelInfo, setTravelInfo] = useState();

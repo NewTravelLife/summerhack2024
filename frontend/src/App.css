@@ -243,6 +243,19 @@ line-height: 38.73px;
 text-align: left;
 
 }
+.animated-text1 {
+  margin-top: 100px;
+  font-size: 47px;
+  top:61%;
+  position: absolute;
+  left: 41%;
+  font-family: Inter;
+font-size: 32px;
+font-weight: 500;
+line-height: 38.73px;
+text-align: left;
+
+}
 .box-container {
   position: relative;
   background-color: #fff;
@@ -384,4 +397,33 @@ left: 10%;
   position: absolute;
   left: 5%;
   top: 5%;
+}
+.box2{
+  background-color: #00C1FF;
+  width: 69%;
+  height: 35%;
+  position: absolute;
+  top: 80%;
+  box-shadow: 0px 1px 1px 0px #00000040;
+
+border-radius: 8px;
+background-color: #fff;
+
+
+}
+.popnaprav{
+  position: relative;
+left: 8%;
+  font-size: 25px;
+  font-weight: 300;
+  line-height: 38.73px;
+  text-align: left;
+}
+.box2 img {
+  width: 210px;
+  height: 210px;
+  margin: 40px;
+  position: relative;
+  top: -50px;
+  border-radius: 4px;
 }

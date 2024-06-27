@@ -11,8 +11,14 @@ function App() {
     const [showText, setShowText] = useState(false);
     const [city, setCity] = useState('');
     const [filteredAttractions, setFilteredAttractions] = useState([]);
-    const start = [49.41461, 8.681495]; // начальная точка
-    const end = [49.41943, 8.686507];
+    const start = {
+        lat: 55.782982,
+        lng: 37.63385
+    }
+    const end = {
+        lat: 59.929984,
+        lng: 30.362158
+    }
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowText(true);
@@ -126,7 +132,7 @@ function App() {
             </div>
             <div>
                 <h1>Карта местности</h1>
-                <MapComponent start={start} end={end}/>
+                <MapComponent origin={start} destination={end}/>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import uploadImage from '../assets/upload.png'; // Импортируйте ваше изображение
 
 const UploadButton = ({ uploadPath }) => {
   const [file, setFile] = useState(null);
@@ -39,21 +40,30 @@ const UploadButton = ({ uploadPath }) => {
   };
 
   return (
-    <div>
-      <button
-        onClick={handleClick}
-        className="nav-button"
-        disabled={uploading}
-      >
-        {uploading ? 'Uploading...' : 'Загрузить файл'}
-      </button>
-      <input
-        id="fileInput"
-        type="file"
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
-    </div>
+      <div>
+        <button
+            onClick={handleClick}
+            className="nav-button"
+            disabled={uploading}
+            style={{ border: 'none', background: 'none', padding: 0 }} // Убираем стили кнопки по умолчанию
+        >
+          {uploading ? (
+              'Uploading...'
+          ) : (
+              <img
+                  src={uploadImage}
+                  alt="Upload Icon"
+                  style={{ width: '50px', height: '50px' }} // Устанавливаем размеры изображения
+              />
+          )}
+        </button>
+        <input
+            id="fileInput"
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+        />
+      </div>
   );
 };
 

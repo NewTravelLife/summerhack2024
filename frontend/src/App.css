@@ -333,7 +333,8 @@ select {
 
 .WeatherTemperature {
   position: absolute;
-  right: 50px;
+  right: 120px;
+  top: 1080px;
   color: #282c34;
 }
 
@@ -435,7 +436,40 @@ left: 8%;
   top: -50px;
   border-radius: 4px;
 }
-.mapCss {
-  position: absolute;
-  left: calc(var(--width)/2);
+.placeholder {
+  position: relative;
+  width: 40vw;
+  height: 100vh;
+  max-width: 500px;
+  max-height: 500px;
+  left: calc(-30vw);
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: black;
 }
+.testViewElement{
+  background-color: #808080;
+}
+
+.Upload-button {
+   position: absolute;
+ /* border: none;
+  color: white;
+  width: 100px;
+  height: 50px;
+  font-size: 30px;
+ 
+  cursor: pointer;
+  transition: color 0.3s; */
+  background: #56CCF2; 
+  top: 720px;
+  right: 10%;
+  border-radius: 8px;
+}
+
+/* .Upload-button:hover {
+  background-color: none;
+  color: #61dafb;
+} */
+
+

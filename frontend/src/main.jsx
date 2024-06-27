@@ -21,7 +21,6 @@ function App() {
   const [showText, setShowText] = useState(false);
   const [city, setCity] = useState('');
   const [filteredAttractions, setFilteredAttractions] = useState([]);
-  const [temperature, setTemperature] = useState(null);
   const [checked, setChecked] = useState({
     word1: false,
     word2: false,
@@ -43,18 +42,6 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-
-    useEffect(() => {
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
-          .then((response) => response.json()) // Преобразуем ответ в JSON
-          .then((data) => {
-            if (data && data.current) {
-              setTemperature(data.current.temperature_2m); // Устанавливаем температуру в состояние
-            } else {
-                console.log("Ошибка загрузки температуры.");
-            }
-          })
-      }, []);
   
   useEffect(() => {
     filterAttractions(city);
@@ -160,12 +147,7 @@ function App() {
           </div>
         ))}
       </div>
-      <div>
-            <h1>Температура сейчас:</h1>
-            {temperature !== null ? (<p>{temperature} °C</p>) :
-                (<p>Загрузка...</p>)}
-          </div>
-            
+           
         </div>
     );
 

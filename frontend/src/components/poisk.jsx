@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import '../App.css';
 import '../index.css';
@@ -8,14 +8,15 @@ import image3 from '../assets/image000.png';
 import image4 from '../assets/image000.png';
 import strelkaUrl from '../assets/strelka.png';
 import bac from '../assets/bac.png';
-import MapComponent from "../components/map.jsx";
+// import MapComponent from "../components/map.jsx";
+import UploadButton from '../components/UploadButton.jsx';
 const Poisk = () => {
     const [checked, setChecked] = useState({
         word1: false,
         word2: false,
         word3: false,
       });
-    
+      const [temperature, setTemperature] = useState(null);
       const handleSelect = (word) => {
         setChecked((prevChecked) => ({ ...prevChecked, [word]: !prevChecked[word] }));
       };
@@ -52,7 +53,17 @@ const Poisk = () => {
         lat: 59.929984,
         lng: 30.362158
     }
-    
+    useEffect(() => {
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
+        .then((response) => response.json()) // Преобразуем ответ в JSON
+        .then((data) => {
+          if (data && data.current) {
+            setTemperature(data.current.temperature_2m); // Устанавливаем температуру в состояние
+          } else {
+              console.log("Ошибка загрузки температуры.");
+          }
+        })
+    }, []);
 
   return (
     <div>
@@ -108,10 +119,17 @@ const Poisk = () => {
           </div>
       </div>
       </div>
-      <div>
-        <h1>Карта местности</h1>
-        <MapComponent start={start} end={end}/>
+      <div className='placeholder'>
       </div>
+      <div className='Upload-button'>
+      <UploadButton uploadPath="api/travel/upload_file/1"/>
+      </div>
+      <div className="WeatherTemperature"> 
+            <p>Температура на маршруте:</p>
+            {temperature !== null ? (<h1>{temperature} °C</h1>) :
+                (<p>Загрузка...</p>)}
+          </div>
+      
     </div>
 
   );

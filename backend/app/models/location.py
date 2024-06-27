@@ -7,7 +7,6 @@ from app.database import Base, db
 
 if TYPE_CHECKING:
     from .travel import Travel
-    from .hotel import Hotel
 
 
 class Location(Base):
@@ -25,8 +24,6 @@ class Location(Base):
 
     is_hotels_listed: Mapped[bool] = mapped_column(Boolean(), nullable=False,
                                                    default=False)
-    hotels: Mapped[List['Hotel']] = relationship(back_populates='location',
-                                                 lazy='selectin')
 
     def to_tuple(self) -> Tuple[float, float]:
         return self.longitude, self.latitude

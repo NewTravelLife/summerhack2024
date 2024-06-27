@@ -4,8 +4,7 @@ from flask import Blueprint, current_app
 from flask import jsonify
 from app.crud.hotel import crud_get_hotels_by_location, crud_is_hotels_listed_by_location, crud_list_hotels_by_location, \
     crud_set_hotels_listed_by_location
-from app.crud.location import crud_get_location_by_id, crud_get_first_location_by_travel, \
-    crud_get_last_location_by_travel
+from app.crud.location import crud_get_location_by_id
 from app.crud.travel import crud_get_travel_by_id
 from app.schemas.hotel import HotelResponse
 from app.crud.google_down_maps import GoogleMaps

@@ -1,7 +1,6 @@
 from flask import Blueprint, current_app
 
 from app.crud.google_down_maps import GoogleMaps
-from app.crud.location import crud_get_first_location_by_travel, crud_get_last_location_by_travel
 from app.crud.travel import crud_get_travel_by_id
 
 api_tourist_attraction = Blueprint('tourist_attraction', __name__, url_prefix='/tourist_attraction')

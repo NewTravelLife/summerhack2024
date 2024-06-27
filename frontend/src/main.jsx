@@ -17,13 +17,7 @@ function App() {
     const [showText, setShowText] = useState(false);
     const [city, setCity] = useState('');
     const [filteredAttractions, setFilteredAttractions] = useState([]);
-    const [uploadedFile, setUploadedFile] = useState(null);
 
-
-    const handleFileUpload = (file) => {
-        setUploadedFile(file);
-        console.log('Загруженный файл:', file);
-      };
 
     const start = {
         lat: 55.782982,
@@ -116,7 +110,7 @@ function App() {
                     <button className="nav-button">Жильё</button>
                     <button className="nav-button">Питание</button>
                     <button className="nav-button">Мои путешествия</button>
-                    <UploadButton onFileUpload={handleFileUpload}/> {/* Кнопка для загрузки файлов */}
+                    <UploadButton uploadPath="api/travel/upload_file/1"/>
                 </div>
             </div>
             <div className="text-container">

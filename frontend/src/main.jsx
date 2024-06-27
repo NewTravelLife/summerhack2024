@@ -26,16 +26,6 @@ function App() {
         word2: false,
         word3: false,
     });
-    const start = {
-        lat: 55.782982,
-        lng: 37.63385
-    }
-    const end = {
-        lat: 59.929984,
-        lng: 30.362158
-    }
-
-
     const handleSelect = (word) => {
         setChecked((prevChecked) => ({
             ...prevChecked,
@@ -173,12 +163,12 @@ function App() {
             </div>
             <div>
                 <h1>Карта местности</h1>
-                <MapComponent route={[[
+                <MapComponent route={[
                     {
                         "address": "University Embankment, 7, Sankt-Peterburg",
-                        location: {
-                            lat: 59.9404682,
-                            lng: 30.3005417
+                        "location": {
+                            "lat": 1,
+                            "lng": 1
                         },
                         "name": "Zdaniye Dvenadtsati Kollegiy",
                         "rating": 4.7,
@@ -186,9 +176,9 @@ function App() {
                     },
                     {
                         "address": "University Embankment, 3, Sankt-Peterburg",
-                        location: {
-                            lat: 59.9415595,
-                            lng: 30.3047921
+                        "location": {
+                            "lat": 59.9415595,
+                            "lng": 30.3047921
                         },
                         "name": "Kunstkamera",
                         "rating": 4.4,
@@ -196,14 +186,14 @@ function App() {
                     },
                     {
                         "address": "Palace Square, 2, Sankt-Peterburg",
-                        location: {
-                            lat: 59.93983170000001,
-                            lng: 30.31455969999999
+                        "location": {
+                            "lat": 59.93983170000001,
+                            "lng": 30.31455969999999
                         },
                         "name": "State Hermitage Museum",
                         "rating": 4.8,
                         "user_ratings_total": 58398
-                    }]]}/>
+                    }]}/>
             </div>
             <div>
                 <h1>Температура сейчас:</h1>

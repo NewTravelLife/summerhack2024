@@ -1,5 +1,4 @@
-import {GoogleMap, LoadScript} from '@react-google-maps/api';
-import {Marker, Polyline} from "react-leaflet";
+import {GoogleMap, LoadScript, Polyline} from '@react-google-maps/api';
 
 const MapComponent = ({route}) => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -28,16 +27,6 @@ const MapComponent = ({route}) => {
                 zoom={7}
                 center={center}
             >
-                {route.map((location, index) => (
-                    <Marker
-                        key={index}
-                        position={{
-                            lat: location.location.lat,
-                            lng: location.location.lng
-                        }}
-                        title={location.name}
-                    />
-                ))}
                 <Polyline
                     path={pathCoordinates}
                     options={{

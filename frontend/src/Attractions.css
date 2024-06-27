@@ -1,19 +1,21 @@
 /* Attractions.css */
-.attractions-container {
+.attractions-container, .restaurants-container, .lodging-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+    flex-wrap: nowrap; /* Ограничивает перенос элементов на новую строку */
+    overflow-x: auto; /* Добавляет горизонтальную прокрутку, если элементов больше, чем помещается на экране */
+    gap: 20px; /* Отступ между элементами */
+    margin-bottom: 20px; /* Отступ снизу между контейнерами */
 }
 
-.attraction-item {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 16px;
-    width: calc(33.333% - 40px);
-    box-sizing: border-box;
+.attraction-item, .restaurant-item, .lodging-item {
+    flex: 0 0 auto; /* Определяет, как элементы должны распределять своё пространство */
+    width: calc(20% - 20px); /* Ширина каждого элемента (20% ширины контейнера минус отступы между элементами) */
+    padding: 10px; /* Внутренний отступ элемента */
+    text-align: center; /* Выравнивание текста по центру */
+    box-sizing: border-box; /* Учитывает отступы и рамки в расчёте ширины и высоты элемента */
 }
 
-.attraction-image {
-    max-width: 100%;
-    border-radius: 8px;
+.attraction-image, .restaurant-image, .lodging-image {
+    max-width: 100%; /* Максимальная ширина изображения */
+    border-radius: 8px; /* Закругление углов */
 }

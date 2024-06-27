@@ -7,7 +7,6 @@ import './App.css';
 import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
-import 'leaflet/dist/leaflet.css';
 import UploadButton from './components/UploadButton.jsx';
 
 function setCords() {

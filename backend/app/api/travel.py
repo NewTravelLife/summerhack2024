@@ -1,12 +1,13 @@
 import os
 import uuid
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, current_app, jsonify, request
 
 from app.core import app
 from app.crud.location import crud_get_location_by_id
-from app.crud.travel import crud_get_travel_by_id, crud_create_travel
-from app.crud.file import crud_create_file, crud_get_file_by_travel_id, crud_get_file_by_original_name_and_travel_id
+from app.crud.travel import crud_create_travel, crud_get_travel_by_id
+from app.crud.file import crud_create_file, \
+    crud_get_file_by_original_name_and_travel_id, crud_get_file_by_travel_id
 from app.database import db
 from app.services.disk import ProjectDisk
 
@@ -42,15 +43,19 @@ def upload_file(travel_id):
         return '', 400
     if not travel_id.isdigit():
         return '', 400
+    travel = crud_get_travel_by_id(travel_id)
+    if travel is None:
+        return '', 404
     file = request.files['file']
     if file is None:
         return '', 400
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(path)
     project_disk = ProjectDisk()
     disk_name = str(uuid.uuid4())
-    project_disk.upload_to_bucket(disk_name, os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.filename))
-    os.remove(os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.filename))
-    crud_create_file(disk_name, file.filename, travel_id)
+    project_disk.upload_to_bucket(disk_name, path)
+    os.remove(path)
+    crud_create_file(disk_name, file.filename, travel)
     return '', 200
 
 
@@ -67,7 +72,8 @@ def get_files(travel_id):
     return jsonify(original_files), 200
 
 
-@api_travel.route('/download_file/<travel_id>/<original_name>', methods=['GET'])
+@api_travel.route('/download_file/<travel_id>/<original_name>',
+                  methods=['GET'])
 def download_file(travel_id, original_name):
     if travel_id is None:
         return '', 400
@@ -76,10 +82,12 @@ def download_file(travel_id, original_name):
     if original_name is None:
         return '', 400
     project_disk = ProjectDisk()
-    file = crud_get_file_by_original_name_and_travel_id(original_name, travel_id)
+    file = crud_get_file_by_original_name_and_travel_id(original_name,
+                                                        travel_id)
     if file is None:
         return '', 404
-    project_disk.download_from_bucket(file.disk_name, os.path.join(app.config['UPLOAD_FOLDER'] + '/' + file.disk_name))
+    project_disk.download_from_bucket(file.disk_name, os.path.join(
+        current_app.config['UPLOAD_FOLDER'], file.disk_name))
     return '', 200
 
 

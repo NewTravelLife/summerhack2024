@@ -1,6 +1,6 @@
 import os
-from google.cloud import storage
 
+from google.cloud import storage
 
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = 'app/service-account-file.json'
 
@@ -20,9 +20,3 @@ class ProjectDisk():
         blob = self.bucket.blob(blob_name)
         blob.download_to_filename(file_path)
         print(f"File {blob_name} downloaded to {file_path}.")
-
-
-Disk = ProjectDisk()
-Disk.upload_to_bucket('test.txt', 'app/services/local_path_to_save_file.txt')
-
-

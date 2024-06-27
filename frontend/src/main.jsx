@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import './index.css';
 import { Routes, Route } from 'react-router-dom';
-import MapComponent from "./components/map.jsx";
 import './App.css';
 import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
 import 'leaflet/dist/leaflet.css';
+import MapComponent from "./components/map.jsx";
 import UploadButton from './components/UploadButton.jsx';
 
 function setCords() {
@@ -28,14 +28,7 @@ function App() {
     word3: false,
   });
 
-  const start = {
-        lat: 55.782982,
-        lng: 37.63385
-    }
-    const end = {
-        lat: 59.929984,
-        lng: 30.362158
-    }
+
 
   
   const handleSelect = (word) => {
@@ -168,10 +161,6 @@ function App() {
         ))}
       </div>
       <div>
-        <h1>Карта местности</h1>
-        <MapComponent start={start} end={end}/>
-      </div>
-      <div>
             <h1>Температура сейчас:</h1>
             {temperature !== null ? (<p>{temperature} °C</p>) :
                 (<p>Загрузка...</p>)}
@@ -187,8 +176,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/poisk" element={<Poisk />} />
+        <Route path="/poisk" element={<App />} />
+        <Route path="/" element={<Poisk />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -1,6 +1,8 @@
 import React from "react";
 import image1 from "../assets/image1.jpg";
 import image3 from "../assets/image3.jpg";
+import acceptIcon from "../assets/accept.png";
+import denyIcon from "../assets/deny.png";
 import '../Attractions.css'; // Импортируйте файл стилей, если он у вас есть
 
 const ListAttractions = [
@@ -113,10 +115,20 @@ const Places = ({ filteredAttractions = ListAttractions, filteredRestaurants = L
                 <h2>Достопримечательности</h2>
                 {filteredAttractions.map((attraction, index) => (
                     <div key={index} className="attraction-item">
-                        <img src={attraction.image} alt={attraction.title} className="attraction-image" />
-                        <h3>{attraction.title}</h3>
-                        <p>{attraction.description}</p>
-                        <p><strong>Город:</strong> {attraction.city}</p>
+                        <div className="attraction-content">
+                            <img src={attraction.image} alt={attraction.title} className="attraction-image" />
+                            <h3>{attraction.title}</h3>
+                            <p>{attraction.description}</p>
+                            <p><strong>Город:</strong> {attraction.city}</p>
+                        </div>
+                        <div className="button-container">
+                            <a href="#" className="action-button">
+                                <img src={acceptIcon} alt="Accept" className="button-icon" />
+                            </a>
+                            <a href="#" className="action-button">
+                                <img src={denyIcon} alt="Deny" className="button-icon" />
+                            </a>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -124,10 +136,20 @@ const Places = ({ filteredAttractions = ListAttractions, filteredRestaurants = L
                 <h2>Рестораны и кафе</h2>
                 {filteredRestaurants.map((restaurant, index) => (
                     <div key={index} className="restaurant-item">
-                        <img src={restaurant.image} alt={restaurant.title} className="restaurant-image" />
-                        <h3>{restaurant.title}</h3>
-                        <p>{restaurant.description}</p>
-                        <p><strong>Город:</strong> {restaurant.city}</p>
+                        <div className="restaurant-content">
+                            <img src={restaurant.image} alt={restaurant.title} className="restaurant-image" />
+                            <h3>{restaurant.title}</h3>
+                            <p>{restaurant.description}</p>
+                            <p><strong>Город:</strong> {restaurant.city}</p>
+                        </div>
+                        <div className="button-container">
+                            <a href="#" className="action-button">
+                                <img src={acceptIcon} alt="Accept" className="button-icon" />
+                            </a>
+                            <a href="#" className="action-button">
+                                <img src={denyIcon} alt="Deny" className="button-icon" />
+                            </a>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -135,10 +157,20 @@ const Places = ({ filteredAttractions = ListAttractions, filteredRestaurants = L
                 <h2>Отели и гостиницы</h2>
                 {filteredLodging.map((lodging, index) => (
                     <div key={index} className="lodging-item">
-                        <img src={lodging.image} alt={lodging.title} className="lodging-image" />
-                        <h3>{lodging.title}</h3>
-                        <p>{lodging.description}</p>
-                        <p><strong>Город:</strong> {lodging.city}</p>
+                        <div className="lodging-content">
+                            <img src={lodging.image} alt={lodging.title} className="lodging-image" />
+                            <h3>{lodging.title}</h3>
+                            <p>{lodging.description}</p>
+                            <p><strong>Город:</strong> {lodging.city}</p>
+                        </div>
+                        <div className="button-container">
+                            <a href="#" className="action-button">
+                                <img src={acceptIcon} alt="Accept" className="button-icon" />
+                            </a>
+                            <a href="#" className="action-button">
+                                <img src={denyIcon} alt="Deny" className="button-icon" />
+                            </a>
+                        </div>
                     </div>
                 ))}
             </div>

@@ -12,10 +12,25 @@
     width: calc(20% - 20px); /* Ширина каждого элемента (20% ширины контейнера минус отступы между элементами) */
     padding: 10px; /* Внутренний отступ элемента */
     text-align: center; /* Выравнивание текста по центру */
-    box-sizing: border-box; /* Учитывает отступы и рамки в расчёте ширины и высоты элемента */
+    box-sizing: border-box;
 }
 
 .attraction-image, .restaurant-image, .lodging-image {
     max-width: 100%; /* Максимальная ширина изображения */
     border-radius: 8px; /* Закругление углов */
 }
+
+.attraction-content, .restaurant-content, .lodging-content {
+    margin-bottom: 10px; /* Отступ снизу для содержимого */
+}
+
+.button-container {
+    position: absolute; /* Абсолютное позиционирование */
+    top: 10px; /* Отступ сверху */
+    right: 10px; /* Отступ справа */
+    display: flex}
+
+
+.button-icon {
+    width: 30px; /* Ширина иконки */
+    height: 30px;}

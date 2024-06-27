@@ -7,6 +7,11 @@ import image3 from './assets/image3.jpg';
 import 'leaflet/dist/leaflet.css';
 import MapComponent from "./components/map.jsx";
 
+function setCords() {
+    start = document.getElementById("startcords1").value;
+    end = document.getElementById("startcords2").value;
+}
+
 function App() {
     const [showText, setShowText] = useState(false);
     const [city, setCity] = useState('');

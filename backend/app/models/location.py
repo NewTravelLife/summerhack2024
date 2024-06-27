@@ -4,6 +4,7 @@ from sqlalchemy import Integer, Float, String, ForeignKey, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
 
+
 if TYPE_CHECKING:
     from .travel import Travel
     from .hotel import Hotel
@@ -23,3 +24,5 @@ class Location(Base):
 
     is_hotels_listed: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=False)
     hotels: Mapped[List['Hotel']] = relationship(back_populates='location', lazy='selectin')
+    order_num: Mapped[int] = mapped_column(Integer(), nullable=False)
+ 

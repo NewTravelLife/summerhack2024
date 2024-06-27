@@ -93,7 +93,7 @@ function App() {
         }).filter(attraction => attraction !== null);
         setFilteredAttractions(filtered);
     };
-
+    
     return (
         <div>
             <div className="header">
@@ -134,9 +134,27 @@ function App() {
                 <h1>Карта местности</h1>
                 <MapComponent origin={start} destination={end}/>
             </div>
+            <div className='WeatherTemperature'>
+             <TemperatureAPI/>   
+            </div>
+            
         </div>
     );
+
 }
+let temperature;
+function TemperatureAPI(){
+fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
+.then((response) => response.json()) // Преобразуем ответ в JSON
+.then((data) => {
+    temperature = data['current']['temperature_2m']; // Получаем температуру
+    return (<h1>{temperature}</h1>);
+})
+.catch((error) => {
+    console.error('Error:', error);}) 
+}
+
+ //ReactDOM.createRoot(document.getElementById('root')).render(<h1 src={TemperatureAPI}></h1>)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

@@ -180,3 +180,9 @@ select {
   font-size: 18px;
   color: #555;
 }
+
+.WeatherTemperature {
+  position: absolute;
+  right: 50px;
+  color: #282c34;
+}

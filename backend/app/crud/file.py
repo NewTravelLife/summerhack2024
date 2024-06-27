@@ -18,6 +18,12 @@ def crud_get_file_by_id(id: int) -> File | None:
     return file
 
 
+def crud_get_file_by_travel_id(travel_id: int) -> File | None:
+    stmt = select(File).where(File.travel_id == travel_id)
+    file = db.session.execute(stmt).all()
+    return file
+
+
 def crud_get_file_by_original_name(original_name: int) -> File | None:
     stmt = select(File).where(File.original_name == original_name)
     file = db.session.execute(stmt)

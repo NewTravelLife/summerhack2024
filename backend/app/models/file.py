@@ -8,6 +8,7 @@ from app.database import Base
 if TYPE_CHECKING:
     from .travel import Travel
 
+
 class File(Base):
     __tablename__ = 'files'
 

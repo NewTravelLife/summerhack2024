@@ -5,6 +5,7 @@ import {
     GoogleMap,
     LoadScript
 } from '@react-google-maps/api';
+import { Class } from 'leaflet';
 
 const MapComponent = ({}) => {
     const [response, setResponse] = useState(null);
@@ -59,7 +60,8 @@ const MapComponent = ({}) => {
           id="direction-example"
           mapContainerStyle={{
             height: '800px',
-            width: '1250px'
+            width: '1250px',
+
           }}
           zoom={7}
           center={{

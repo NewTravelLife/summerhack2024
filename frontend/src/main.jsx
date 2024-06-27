@@ -3,13 +3,18 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import './index.css';
 import { Routes, Route } from 'react-router-dom';
-import MapComponent from "./components/map.jsx";
 import './App.css';
 import image1 from './assets/image1.jpg';
 import image3 from './assets/image3.jpg';
 import Poisk from "./components/poisk";
+
+import 'leaflet/dist/leaflet.css';
+import MapComponent from "./components/map.jsx";
+import UploadButton from './components/UploadButton.jsx';
+
 import Places from "./components/places.jsx";
 import TravelDocuments from "./components/TravelDocuments.jsx";
+
 
 function setCords() {
     start = document.getElementById("startcords1").value;
@@ -21,21 +26,13 @@ function App() {
   const [showText, setShowText] = useState(false);
   const [city, setCity] = useState('');
   const [filteredAttractions, setFilteredAttractions] = useState([]);
-  const [temperature, setTemperature] = useState(null);
   const [checked, setChecked] = useState({
     word1: false,
     word2: false,
     word3: false,
   });
 
-  const start = {
-        lat: 55.782982,
-        lng: 37.63385
-    }
-    const end = {
-        lat: 59.929984,
-        lng: 30.362158
-    }
+
 
   
   const handleSelect = (word) => {
@@ -50,18 +47,6 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-
-    useEffect(() => {
-        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
-          .then((response) => response.json()) // Преобразуем ответ в JSON
-          .then((data) => {
-            if (data && data.current) {
-              setTemperature(data.current.temperature_2m); // Устанавливаем температуру в состояние
-            } else {
-                console.log("Ошибка загрузки температуры.");
-            }
-          })
-      }, []);
   
   useEffect(() => {
     filterAttractions(city);
@@ -155,7 +140,20 @@ function App() {
           ))}
         </select>
       </div>
-      
+
+      <div className="attractions">
+        {filteredAttractions.map((attraction, index) => (
+          <div className="card" key={index}>
+            <img src={attraction.image} alt={attraction.title} className="card-image"/>
+            <h3 className="card-title">{attraction.title}</h3>
+            <p className="card-description">{attraction.description}</p>
+          </div>
+        ))}
+      </div>
+           
+        </div>
+    );
+
         <Places/>
         
     
@@ -179,6 +177,7 @@ function App() {
     </div>
   );
 
+
 }
 
 
@@ -186,8 +185,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/poisk" element={<Poisk />} />
+        <Route path="/poisk" element={<App />} />
+        <Route path="/" element={<Poisk />} />
       </Routes>
     </Router>
   </React.StrictMode>

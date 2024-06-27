@@ -11,6 +11,7 @@ function App() {
     const [showText, setShowText] = useState(false);
     const [city, setCity] = useState('');
     const [filteredAttractions, setFilteredAttractions] = useState([]);
+    const [temperature, setTemperature] = useState(null);
     const start = {
         lat: 55.782982,
         lng: 37.63385
@@ -19,6 +20,7 @@ function App() {
         lat: 59.929984,
         lng: 30.362158
     }
+
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowText(true);
@@ -30,6 +32,18 @@ function App() {
     useEffect(() => {
         filterAttractions(city);
     }, [city]);
+
+    useEffect(() => {
+        fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
+          .then((response) => response.json()) // Преобразуем ответ в JSON
+          .then((data) => {
+            if (data && data.current) {
+              setTemperature(data.current.temperature_2m); // Устанавливаем температуру в состояние
+            } else {
+                console.log("Ошибка загрузки температуры.");
+            }
+          })
+      }, []);
 
     const attractions = [
         {
@@ -134,27 +148,17 @@ function App() {
                 <h1>Карта местности</h1>
                 <MapComponent origin={start} destination={end}/>
             </div>
-            <div className='WeatherTemperature'>
-             <TemperatureAPI/>   
+            <div>
+            <h1>Температура сейчас:</h1>
+            {temperature !== null ? (<p>{temperature} °C</p>) :
+                (<p>Загрузка...</p>)}
             </div>
             
         </div>
     );
 
 }
-let temperature;
-function TemperatureAPI(){
-fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
-.then((response) => response.json()) // Преобразуем ответ в JSON
-.then((data) => {
-    temperature = data['current']['temperature_2m']; // Получаем температуру
-    return (<h1>{temperature}</h1>);
-})
-.catch((error) => {
-    console.error('Error:', error);}) 
-}
 
- //ReactDOM.createRoot(document.getElementById('root')).render(<h1 src={TemperatureAPI}></h1>)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

@@ -63,9 +63,6 @@ def create_travel():
     response: TravelCreateResponse = TravelCreateResponse(
         travel_id=int(travel.id))
     return jsonify(response), 200
-    if travel is None:
-        return '', 400
-    return jsonify({'id': travel.id}), 200
 
 
 @api_travel.route('/upload_file/<travel_id>', methods=['POST'])
@@ -91,7 +88,7 @@ def upload_file(travel_id):
 
 
 @api_travel.route('/files/<travel_id>', methods=['GET'])
-def get_files(travel_id):
+def get_files(travel_id: int):
     if travel_id is None:
         return '', 400
     if not travel_id.isdigit():
@@ -105,7 +102,7 @@ def get_files(travel_id):
 
 @api_travel.route('/download_file/<travel_id>/<original_name>',
                   methods=['GET'])
-def download_file(travel_id, original_name):
+def download_file(travel_id: int, original_name: str):
     if travel_id is None:
         return '', 400
     if not travel_id.isdigit():
@@ -123,7 +120,7 @@ def download_file(travel_id, original_name):
 
 
 @api_travel.route('/set_locations/<travel_id>', methods=['DELETE'])
-def set_locations(travel_id):
+def set_locations(travel_id: int):
     if travel_id is None:
         return '', 400
     if not travel_id.isdigit():

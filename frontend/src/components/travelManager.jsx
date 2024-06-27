@@ -1,16 +1,11 @@
-import React from "react";
-import { useCookies } from 'react-cookie';
-
-
 let coords = {};
 let current_travel_id;
 
-const getCords = (lat, lng) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['travel_id']);
+const getCords = (lat, lng, cookie, setCookie) => {
 
     const sendCoordsToBackend = async () => {
         try {
-            const response = await fetch('http://localhost/api/travel/', { 
+            const response = await fetch('http://localhost/api/travel/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +20,9 @@ const getCords = (lat, lng) => {
                 current_travel_id = data.travel_id;
                 if (current_travel_id) {
                     window.location.href = `/travel/${current_travel_id}`;
-                    setCookie('travel_id', current_travel_id)
+                    let travelIds = cookie.travel_id ? cookie.travel_id.toString().split(',') : [];
+                    travelIds.push(current_travel_id.toString());
+                    setCookie('travel_id', travelIds.join(','), {path: '/'});
                 }
             } else {
                 console.error('Empty response');

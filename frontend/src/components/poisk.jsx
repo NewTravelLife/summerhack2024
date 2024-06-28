@@ -71,12 +71,12 @@ const Poisk = () => {
             </div>
             <div className="text-container0">
                 <div className="animated-text0">
-                    Помошник в составлении вашего идеального путешествия
+                    Помощник в составлении вашего идеального путешествия
                 </div>
             </div>
             <div className='forma'>
                 <button className='poisk'
-                        onClick={handleComposeRoute}>Составить
+                        onClick={handleComposeRoute}>Составить маршрут
                 </button>
                 <img src={strelkaUrl} className='strelka' alt=""/>
                 <div className='Otpravka'>
@@ -114,6 +114,7 @@ const Poisk = () => {
                             />
                         </Autocomplete>
                     </LoadScript>
+                </div>
                 </div>
             </div>
         </div>

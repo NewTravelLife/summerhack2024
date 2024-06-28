@@ -252,7 +252,6 @@ body, html {
     font-weight: 500;
     line-height: 38.73px;
     text-align: left;
-
 }
 
 .animated-text1 {
@@ -364,8 +363,6 @@ select {
     border-radius: 1px;
     border: 1px solid #56CCF2;
     position: relative;
-
-
 }
 
 .input-otprav:focus {
@@ -411,8 +408,6 @@ select {
     font-family: Inter;
 
     font-weight: 300;
-
-
 }
 
 .poisk:focus {
@@ -489,7 +484,11 @@ select {
     right: 10%;
     border-radius: 8px;
 }
-
+.travelTable{
+  background-color: white;
+  border-radius: 60px;
+  
+}
 /* .Upload-button:hover {
   background-color: none;
   color: #61dafb;

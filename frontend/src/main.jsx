@@ -5,7 +5,7 @@ import './index.css';
 import './App.css';
 import Poisk from "./components/poisk";
 import 'leaflet/dist/leaflet.css';
-import UploadButton from './components/UploadButton.jsx';
+import Travel from "./components/travel.jsx";
 
 
 function App() {
@@ -44,11 +44,7 @@ function App() {
             <div className="header">
                 <div className="project-name">newtravel.life</div>
                 <div className="nav-buttons">
-                    <button className="nav-button">Жильё</button>
-                    <button className="nav-button">Питание</button>
                     <button className="nav-button">Мои путешествия</button>
-                    <button className="nav-button">Поделиться</button>
-                    <UploadButton uploadPath="api/travel/upload_file/1"/>
                     <Link to="/poisk">
                         <button className="nav-button">Создать путешествие
                         </button>
@@ -99,6 +95,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Routes>
                 <Route path="/" element={<App/>}/>
                 <Route path="/poisk" element={<Poisk/>}/>
+                <Route path="/travel/:travel_id" element={<Travel/>}/>
             </Routes>
         </Router>
     </React.StrictMode>

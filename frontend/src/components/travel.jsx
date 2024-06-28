@@ -1,10 +1,11 @@
+import {useState} from 'react';
+import {useParams} from "react-router-dom";
 
-import React, { useState } from 'react';
-
-const Travel = ({travel_id}) => {
+const Travel = () => {
+    const {travel_id} = useParams();
     const [travelInfo, setTravelInfo] = useState();
     const fetch_data = (travel_id) => {
-        fetch('/api/travel/get/' + travel_id)
+        fetch('/api/travel/locations/' + travel_id)
             .then(response => response.json())
             .then(data => setTravelInfo(data));
     };
@@ -16,6 +17,5 @@ const Travel = ({travel_id}) => {
             </div>}
         </div>
     );
-
 }
 export default Travel;

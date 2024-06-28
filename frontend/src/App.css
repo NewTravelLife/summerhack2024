@@ -127,13 +127,13 @@ body, html {
 }
 
 .text-container {
-  height: 210px; 
+  height: 300px; 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .text-container0{
-  height: 210px; 
+  height: 300px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -233,7 +233,7 @@ text-align: left;
 
 }
 .animated-text0 {
-  margin-top: 100px;
+  margin-top: 5px;
   font-size: 47px;
   height: 110px;
   font-family: Inter;
@@ -340,16 +340,18 @@ select {
 
 .Otpravka{
   font-size: 25px;
-  position: relative;
+  position: absolute;
   height: 35px;
-  left: -33%;
+  left: 180px;
+  top: 180px;
 }
 .input-otprav{
-  width: 15%;
+  width: 100%;
   height: 100%;
   border-radius: 1px;
+  left: 0px;
 border: 1px solid #56CCF2;
-position: relative;
+position: absolute;
 
 
 }
@@ -360,42 +362,34 @@ position: relative;
 }
 .Priezd{
   font-size: 25px;
-  position: relative;
+  position: absolute;
   height: 35px;
   width: 20%;
-  left: 35%;
-  top: -60px;
+  left: 600px;
+  top: 180px;
 
 }
 .Priezd input{
-width: 90%;
-position: relative;
-left: 10%;
+  width: 200px;
+  position: absolute;
+  left: 60px;
+  height: 100%;
 
 }
 .strelka{
   position: absolute;
   width: 6%;
-  left: 28%;
-  top: 84%;
+  left: 500px;
+  top: 270px;
 }
 .poisk{
   position: absolute;
-  cursor: pointer;
+  /* cursor: pointer; */
   background: #56CCF2;
   left: 60%;
-  top: 81%;
+  top: 250px;
   z-index: 3;
   color: #fff;
-
-
-
-  font-family: Inter;
-
-  font-weight: 300;
-
-
-  
 
 }
 .poisk:focus{
@@ -466,7 +460,11 @@ left: 8%;
   right: 10%;
   border-radius: 8px;
 }
-
+.travelTable{
+  background-color: white;
+  border-radius: 60px;
+  
+}
 /* .Upload-button:hover {
   background-color: none;
   color: #61dafb;

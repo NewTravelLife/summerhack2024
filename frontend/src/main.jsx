@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
 import './index.css';
 import './App.css';
-import Poisk from "./components/poisk";
+import Poisk from "./components/poisk.jsx";
 import 'leaflet/dist/leaflet.css';
 import Travelimg from './assets/travel.png';
 import Travel from "./components/travel.jsx";
@@ -89,7 +89,7 @@ function App() {
             {/*        (<p>Загрузка...</p>)}*/}
             {/*</div>*/}
             <div className="MainInfoUs" >
-                {/* <img  src={Travelimg} alt="" /> */}
+                <img  src={Travelimg} alt="" />
                 <div >
                   <p style={{position:"relative", top:"50px"}}>Мы – команда NewTravel. Веселые и крутые ребята с опытом backend-frontend разработки. 
                     (За плечами у каждого из нас интересные проекты, хакатоны и десятки бессонных ночей кодинга)

@@ -5,12 +5,12 @@ import TravelDocuments from "./TravelDocuments.jsx";
 const Travel = () => {
     const {travel_id} = useParams();
     const [travelInfo, setTravelInfo] = useState();
-    // const fetch_data = (travel_id) => {
-    //     fetch('/api/travel/locations/' + travel_id)
-    //         .then(response => response.json())
-    //         .then(data => setTravelInfo(data));
-    // };
-    // fetch_data(travel_id);
+    const fetch_data = (travel_id) => {
+        fetch('/api/travel/get/' + travel_id)
+            .then(response => response.json())
+            .then(data => setTravelInfo(data));
+    };
+    fetch_data(travel_id);
     return (
         <div>
             <h1>Инфа по путешествию {travel_id}</h1>
@@ -21,5 +21,6 @@ const Travel = () => {
             />
         </div>
     );
+
 }
 export default Travel;

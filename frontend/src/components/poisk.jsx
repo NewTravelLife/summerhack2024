@@ -62,8 +62,6 @@ const Poisk = () => {
                     <div className="project-name">newtravel.life</div>
                 </Link>
                 <div className="nav-buttons">
-                    <button className="nav-button">Жильё</button>
-                    <button className="nav-button">Питание</button>
                     <button className="nav-button">Мои путешествия</button>
                     <Link to="/poisk">
                         <button className="nav-button">Создать путешествие

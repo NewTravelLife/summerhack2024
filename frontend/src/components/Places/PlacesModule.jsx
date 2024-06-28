@@ -25,7 +25,7 @@ const PlacesModule = ({ travel_id }) => {
 	return (
 		<div>
 			{Object.entries(travelPlaces).map(([key, value]) => (
-				<Place key={key} places_data={travelPlaces[key]} />
+				<Place key={key} category={key} places_data={travelPlaces[key]} />
 			))}
 			<button onClick={fetchTravelPlaces}>Обновить места</button>
 		</div>

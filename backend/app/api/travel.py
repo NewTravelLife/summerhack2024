@@ -6,7 +6,8 @@ from flask import Blueprint, current_app, jsonify, request, send_file
 
 from app.crud.file import crud_create_file, \
     crud_get_file_by_original_name_and_travel_id, crud_get_file_by_travel_id
-from app.crud.location import crud_create_location, crud_get_location_by_id, crud_get_last_location_by_travel
+from app.crud.location import crud_create_location, crud_get_location_by_id, crud_get_last_location_by_travel, \
+    crud_get_ordered_locations_by_travel
 from app.crud.travel import crud_create_travel, crud_get_travel_by_id
 from app.database import db
 from app.schemas.travel import TravelCreateRequest, TravelCreateResponse, \
@@ -26,7 +27,7 @@ def get_locations(travel_id: int):
         return '', 404
     response: TravelGetLocationsResponse = TravelGetLocationsResponse(
         locations=[])
-    for location in travel.locations:
+    for location in crud_get_ordered_locations_by_travel(travel):
         response['locations'].append(
             TravelLocation(id=int(location.id), latitude=location.latitude,
                            longitude=location.longitude,
@@ -147,6 +148,9 @@ def new_location(travel_id: int):
     travel = crud_get_travel_by_id(int(travel_id))
     if travel is None:
         return '', 404
-    order_num = crud_get_last_location_by_travel(travel).order_number - 1
-    crud_create_location(data['lat'], data['lon'], data['location_type'], order_num, travel)
+    last_location = crud_get_last_location_by_travel(travel)
+    n = last_location.order_number
+    last_location.order_number += 1
+    db.session.commit()
+    crud_create_location(data['lat'], data['lon'], data['location_type'], n, travel)
     return '', 200

@@ -524,26 +524,34 @@ border-radius: 10px;
 position: relative;
 left: 2%;
       }
-       .booxxx {
+      .booxxx {
         background-color: #fff;
         border-radius: 10px;
-        height: 200px;
+        min-height: 200px; /* set a minimum height */
         position: relative;
         left: 30%;
         width: 500px;
         display: flex;
         flex-direction: column;
+        overflow-y: auto; /* allow the box to expand vertically */
       }
-      .booxxx img{
+      
+      .booxxx img {
         position: relative;
         left: 50%;
-    
       }
-      .document-name{
+      
+      .document-name {
         background-color: #fff;
         display: flex;
+        flex-grow: 1; /* take up the remaining space */
+        flex-basis: 0; /* set the initial width to 0 */
       }
-      .document-list{
+      
+      .document-list {
         background-color: #fff;
         display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* take up the remaining space */
+        flex-basis: 0; /* set the initial width to 0 */
       }

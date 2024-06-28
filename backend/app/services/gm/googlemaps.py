@@ -53,7 +53,7 @@ class GoogleMaps:
         end_point = crud_get_last_location_by_travel(travel).to_tuple()
         locations = [location.to_tuple() for location in
                      crud_get_ordered_locations_by_travel(travel)[1:-1]]
-        directions = self.gmaps.directions(start_point, end_point, locations)
+        directions = self.gmaps.directions(start_point, end_point, waypoints=locations)
         route_coords: List[TravelRoutePoint] = []
         for step in directions[0]['legs'][0]['steps']:
             polyline = step['polyline']['points']

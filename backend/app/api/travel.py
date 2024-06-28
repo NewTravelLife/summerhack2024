@@ -135,8 +135,8 @@ def set_locations(travel_id: int):
     return '', 200
 
 
-@api_travel.route('/new_location/<travel_id>/', methods=['POST'])
-def new_location(travel_id):
+@api_travel.route('/new_location/<travel_id>', methods=['POST'])
+def new_location(travel_id: int):
     if travel_id is None:
         return '', 400
     if not travel_id.isdigit():
@@ -144,7 +144,9 @@ def new_location(travel_id):
     data = request.get_json()
     if data is None:
         return '', 400
-    order_num = crud_get_last_location_by_travel(travel_id).order_number - 1
-    crud_create_location(data['lat'], data['lon'], data['location_type'], order_num,
-                         crud_get_travel_by_id(int(travel_id)))
+    travel = crud_get_travel_by_id(int(travel_id))
+    if travel is None:
+        return '', 404
+    order_num = crud_get_last_location_by_travel(travel).order_number - 1
+    crud_create_location(data['lat'], data['lon'], data['location_type'], order_num, travel)
     return '', 200

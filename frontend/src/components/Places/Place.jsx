@@ -1,6 +1,6 @@
 import acceptIcon from '../../assets/accept.png'
 
-const Place = ({ category, places_data }) => {
+const Place = ({ travel_id, category, places_data }) => {
 	if (!Array.isArray(places_data)) {
 		return <h1>Загрузка мест...</h1>
 	}
@@ -9,6 +9,22 @@ const Place = ({ category, places_data }) => {
 		food: 'Кафе и рестораны',
 		hotel: 'Жилье и отели',
 		museum: 'Музеи',
+	}
+
+	const addLocation = (lon, lat, location_type) => {
+		const body = {
+			lon: lon,
+			lat: lat,
+			location_type: location_type,
+		}
+		console.log(body)
+		fetch('http://localhost/api/travel/new_location/' + travel_id, {
+			method: 'POST',
+			body: JSON.stringify(body),
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
 	}
 
 	return (
@@ -26,9 +42,18 @@ const Place = ({ category, places_data }) => {
 							</p>
 						</div>
 						<div className='button-container'>
-							<a href='#' className='action-button'>
+							<button
+								className='action-button'
+								onClick={() =>
+									addLocation(
+										place_data.location.lng,
+										place_data.location.lat,
+										category
+									)
+								}
+							>
 								<img src={acceptIcon} alt='Accept' className='button-icon' />
-							</a>
+							</button>
 						</div>
 					</div>
 				))}

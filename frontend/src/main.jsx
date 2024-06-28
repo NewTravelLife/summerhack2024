@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
 import './index.css';
@@ -8,13 +8,12 @@ import 'leaflet/dist/leaflet.css';
 import Travelimg from './assets/travel.png';
 import Travel from "./components/travel.jsx";
 import TravelsList from "./components/travelsList.jsx";
-
-
+import Travel2 from "./components/travel2.jsx";
 
 function App() {
-    const [city, setCity] = useState('');
-    const [filteredAttractions, setFilteredAttractions] = useState([]);
-    const [temperature, setTemperature] = useState(null);
+    // const [city, setCity] = useState('');
+    // const [filteredAttractions, setFilteredAttractions] = useState([]);
+    // const [temperature, setTemperature] = useState(null);
     // useEffect(() => {
     //     fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m')
     //         .then((response) => response.json()) // Преобразуем ответ в JSON
@@ -90,12 +89,12 @@ function App() {
             {/*        (<p>Загрузка...</p>)}*/}
             {/*</div>*/}
             <div className="MainInfoUs" >
-                <img  src={Travelimg} alt="" />
+                {/* <img  src={Travelimg} alt="" /> */}
                 <div >
-                  <p>Мы – команда NewTravel. Веселые и крутые ребята с опытом backend-frontend разработки. 
+                  <p style={{position:"relative", top:"50px"}}>Мы – команда NewTravel. Веселые и крутые ребята с опытом backend-frontend разработки. 
                     (За плечами у каждого из нас интересные проекты, хакатоны и десятки бессонных ночей кодинга)
                     </p>
-                    <p>
+                    <p style={{position:"relative", top:"50px"}}>
                     Наша задача – сделать вашу жизнь проще «Никакой рутины, только впечатления». Сервис NewTravel заберёт организационные хлопоты на себя. Поиск достопримечательностей, музеев, остановок на сон и еду – всё это мы предложим вам сами. Вам останется лишь воплотить незабываемое путешествие в жизнь!
                     Увидимся в дороге!
                     </p>
@@ -115,7 +114,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/" element={<App/>}/>
                 <Route path="/poisk" element={<Poisk/>}/>
                 <Route path="/travel/:travel_id" element={<Travel/>}/>
-                <Route path="/travels" element={<TravelsList/>}/>
+                <Route path="/test_travel"
+                       element={<Travel2 travel_id="2"/>}/>
             </Routes>
         </Router>
     </React.StrictMode>

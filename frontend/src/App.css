@@ -138,13 +138,11 @@ body, html {
     justify-content: center;
 }
 
-
 .text-container0{
   height: 350px; 
   display: flex;
   align-items: center;
   justify-content: center;
-
 
 }
 
@@ -153,7 +151,6 @@ body, html {
     font-size: 47px;
     opacity: 1;
     height: 110px;
-    font-family: 'Comfortaa', sans-serif;
 }
 
 .checkpoints {
@@ -247,8 +244,16 @@ body, html {
 
 }
 
-
-
+.animated-text0 {
+  margin-top: -70px;
+  font-size: 47px;
+  height: 110px;
+  font-family: Inter;
+font-size: 32px;
+font-weight: 500;
+line-height: 38.73px;
+text-align: left;
+}
 .animated-text1 {
     margin-top: 100px;
     font-size: 47px;
@@ -349,15 +354,17 @@ select {
     font-size: 25px;
     position: relative;
     height: 35px;
-    left: -33%;
+    left: 50px;
+    top: 170px;
 }
 
 .input-otprav {
-    width: 15%;
+    width: 200px;
     height: 100%;
     border-radius: 1px;
     border: 1px solid #56CCF2;
-    position: relative;
+    position: absolute;
+    left: 15px;
 }
 
 .input-otprav:focus {
@@ -384,15 +391,15 @@ select {
 .strelka{
   position: absolute;
   width: 50%;
-  left: 430px;
+  left: 380px;
   top: 300px;
 }
 .poisk{
   position: relative;
   /* cursor: pointer; */
   background: #56CCF2;
-  left: 1020px;
-  top: 250px;
+  left: 900px;
+  top: 300px;
   z-index: 3;
   color: #fff;
 
@@ -427,8 +434,8 @@ left: 8%;
   line-height: 38.73px;
   text-align: left;
 
-
 }
+
 
 .box2 img {
     width: 210px;
@@ -485,31 +492,14 @@ left: 8%;
   top: 0;
  }
  .MainInfoUs{
-  position:absolute;
-  left: 10%;
-  width:38%;
-  height: 35%;
-  background-color: #fff;
-  border-radius: 10px;
-  top: 35%;
+  position: absolute;
+  left: 10px;
+  max-width: 1500px;
   color: black;
   text-align: left;
-  font-size: 20px;
-  font-weight: 500;
-
-
-
+  font-weight: 700;
+  font-size: x-large;
  }
- .MainInfoUs p{
-    position: relative;
-    left: 2%;
-
-  
-  
-  
-   }
-
-
 
 .hui {
     position: relative;
@@ -526,18 +516,25 @@ left: 140%;
 border-radius: 10px;
   
    }
-   .booxxx {
-    background-color: #fff;
+   .MainInfoUs img{
+    position: absolute;
+    width: 50%;
+    left: 140%;
     border-radius: 10px;
-    height: 200px;
-    position: relative;
-    left: 30%;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-  }
-  .booxxx img{
-    position: relative;
-    left: -100%;
-
-  }
+      
+       }
+       .booxxx {
+        background-color: #fff;
+        border-radius: 10px;
+        height: 200px;
+        position: relative;
+        left: 30%;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+      .booxxx img{
+        position: relative;
+        left: -100%;
+    
+      }

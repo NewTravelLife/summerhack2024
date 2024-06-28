@@ -4,6 +4,7 @@ import '../App.css';
 import '../index.css';
 import downloadIcon from '../assets/download.png';
 import UploadButton from './UploadButton.jsx';
+import '../TravelDocuments.css';
 
 const TravelDocuments = ({uploadPath, fetchPath, basePath}) => {
     const [travelDocuments, setTravelDocuments] = useState([]);

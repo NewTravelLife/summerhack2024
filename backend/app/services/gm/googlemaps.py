@@ -1,13 +1,11 @@
-import logging
 import math
 from operator import itemgetter
-from pprint import pprint
-from typing import TypedDict, List, cast
+from typing import cast, List
 
 import googlemaps
 
-from app.crud.location import crud_get_first_location_by_travel, crud_get_ordered_locations_by_travel, \
-    crud_get_last_location_by_travel
+from app.crud.location import crud_get_first_location_by_travel, \
+    crud_get_last_location_by_travel, crud_get_ordered_locations_by_travel
 from app.models.travel import Travel
 from app.schemas.travel import TravelPlace, TravelRoutePoint
 
@@ -31,7 +29,8 @@ class GoogleMaps:
     def __init__(self, api_key: str):
         self.gmaps = googlemaps.Client(key=api_key)
 
-    def find_nearest(self, latitude, longitude, my_type, radius=1000) -> List[TravelPlace]:
+    def find_nearest(self, latitude, longitude, my_type, radius=1000) -> List[
+        TravelPlace]:
         places_result = self.gmaps.places_nearby(
             location=(latitude, longitude),
             radius=radius, type=my_type)
@@ -40,9 +39,12 @@ class GoogleMaps:
             for place in places_result['results']:
                 place_info = TravelPlace(name=place.get('name'),
                                          address=place.get('vicinity'),
-                                         rating=place.get('rating'),
-                                         user_ratings_total=place.get('user_ratings_total'),
-                                         location=TravelRoutePoint(**place.get('geometry', {}).get('location')))
+                                         rating=place.get('rating', 0.0),
+                                         user_ratings_total=place.get(
+                                             'user_ratings_total'),
+                                         location=TravelRoutePoint(
+                                             **place.get('geometry', {}).get(
+                                                 'location')))
                 places.append(place_info)
         return places
 
@@ -51,7 +53,7 @@ class GoogleMaps:
         end_point = crud_get_last_location_by_travel(travel).to_tuple()
         locations = [location.to_tuple() for location in
                      crud_get_ordered_locations_by_travel(travel)[1:-1]]
-        directions = self.gmaps.directions(start_point, end_point, locations)
+        directions = self.gmaps.directions(start_point, end_point, waypoints=locations)
         route_coords: List[TravelRoutePoint] = []
         for step in directions[0]['legs'][0]['steps']:
             polyline = step['polyline']['points']

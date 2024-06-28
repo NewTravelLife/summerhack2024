@@ -72,6 +72,7 @@ const Poisk = () => {
                     </Link>
                 </div>
             </div>
+            <div className='travelTable'>
             <div className="text-container0">
                 <div className="animated-text0">
                     Помощник в составлении вашего идеального путешествия
@@ -119,6 +120,7 @@ const Poisk = () => {
                     </LoadScript>
                 </div>
                 </div>
+            </div>
             </div>
     );
 };

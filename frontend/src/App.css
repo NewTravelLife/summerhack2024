@@ -505,6 +505,36 @@ left: 8%;
     position: relative;
     top: 75px;
 }
-.Table{
- 
+
+body {
+    font-family: 'Comfortaa', sans-serif;
 }
+.MainInfoUs img{
+position: absolute;
+width: 50%;
+left: 140%;
+border-radius: 10px;
+  
+   }
+   .MainInfoUs img{
+    position: absolute;
+    width: 50%;
+    left: 140%;
+    border-radius: 10px;
+      
+       }
+       .booxxx {
+        background-color: #fff;
+        border-radius: 10px;
+        height: 200px;
+        position: relative;
+        left: 30%;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+      .booxxx img{
+        position: relative;
+        left: -100%;
+    
+      }

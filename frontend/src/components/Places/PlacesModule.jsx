@@ -11,7 +11,7 @@ const PlacesModule = ({ travel_id }) => {
 	})
 
 	const fetchTravelPlaces = useCallback(() => {
-		fetch('http://localhost/api/travel/route/' + travel_id)
+		fetch('/api/travel/route/' + travel_id)
 			.then(response => response.json())
 			.then(data => {
 				setTravelPlaces(data['places'])

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import PlacesModule from './places/PlacesModule.jsx';
-import TravelDocuments from './TravelDocuments.jsx';
-import MapComponent from './map.jsx';
+import {useParams} from "react-router-dom";
+import TravelDocuments from "./TravelDocuments.jsx";
+import MapComponent from "./map.jsx";
+import PlacesModule from "./Places/PlacesModule.jsx";
 import Place from './places/Place.jsx'; // добавляем этот импорт
 
 const Travel = () => {
@@ -27,7 +27,7 @@ const Travel = () => {
             const data = await response.json();
             console.log('Updated route:', data.route);
             setRoute(data.route);
-            setPlaces(data.places); // Assuming 'places' key is present in the response
+            setPlaces(data.places); // Assuming 'Places' key is present in the response
         } catch (error) {
             console.error('Error fetching route:', error);
         }
@@ -39,7 +39,7 @@ const Travel = () => {
             const data = await response.json();
             console.log('Fetched route:', data.route);
             setRoute(data.route);
-            setPlaces(data.places); // Update places if they are also returned
+            setPlaces(data.places); // Update Places if they are also returned
         } catch (error) {
             console.error('Error updating route:', error);
         }

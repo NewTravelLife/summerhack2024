@@ -493,8 +493,12 @@ left: 8%;
  }
  .MainInfoUs{
   position: absolute;
-  left: 10px;
-  max-width: 1500px;
+  left: 10%;
+
+  top:30%;
+  background-color: #fff;
+  width: 45%;
+  border-radius: 10px;
   color: black;
   text-align: left;
   font-weight: 700;
@@ -512,29 +516,42 @@ body {
 .MainInfoUs img{
 position: absolute;
 width: 50%;
-left: 140%;
+top: -10%;
+left: 120%;
 border-radius: 10px;
-  
-   }
-   .MainInfoUs img{
-    position: absolute;
-    width: 50%;
-    left: 140%;
-    border-radius: 10px;
-      
-       }
-       .booxxx {
+  }
+  .MainInfoUs p{
+position: relative;
+left: 2%;
+      }
+      .booxxx {
         background-color: #fff;
         border-radius: 10px;
-        height: 200px;
+        min-height: 200px; /* set a minimum height */
         position: relative;
         left: 30%;
         width: 500px;
         display: flex;
         flex-direction: column;
+        overflow-y: auto; /* allow the box to expand vertically */
       }
-      .booxxx img{
+      
+      .booxxx img {
         position: relative;
-        left: -100%;
-    
+        left: 50%;
+      }
+      
+      .document-name {
+        background-color: #fff;
+        display: flex;
+        flex-grow: 1; /* take up the remaining space */
+        flex-basis: 0; /* set the initial width to 0 */
+      }
+      
+      .document-list {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; /* take up the remaining space */
+        flex-basis: 0; /* set the initial width to 0 */
       }

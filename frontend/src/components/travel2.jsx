@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
-import PlacesModule from "./places/PlacesModule.jsx";
 import TravelDocuments from "./TravelDocuments.jsx";
 import MapComponent from "./map.jsx";
+import PlacesModule from "./Places/PlacesModule.jsx";
 
 const Travel2 = ({travel_id}) => {
     const [route, setRoute] = useState([]);
@@ -12,7 +12,7 @@ const Travel2 = ({travel_id}) => {
             const response = await fetch(`/api/travel/route/${travel_id}`);
             const data = await response.json();
             setRoute(data.route);
-            setPlaces(data.places); // Assuming 'places' key is present in the response
+            setPlaces(data.places); // Assuming 'Places' key is present in the response
         } catch (error) {
             console.error('Error fetching route:', error);
         }
@@ -29,7 +29,7 @@ const Travel2 = ({travel_id}) => {
             });
             const data = await response.json();
             setRoute(data.route);
-            setPlaces(data.places); // Update places if they are also returned
+            setPlaces(data.places); // Update Places if they are also returned
         } catch (error) {
             console.error('Error updating route:', error);
         }

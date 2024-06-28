@@ -1,5 +1,7 @@
 import {useEffect, useState} from 'react';
 import '../TravelDocuments.css';
+import '../App.css';
+import '../index.css';
 import downloadIcon from '../assets/download.png';
 import UploadButton from './UploadButton.jsx';
 
@@ -26,6 +28,7 @@ const TravelDocuments = ({uploadPath, fetchPath, basePath}) => {
 
     return (
         <div>
+            <div className='booxxx'>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -34,6 +37,7 @@ const TravelDocuments = ({uploadPath, fetchPath, basePath}) => {
                 <h1 style={{marginRight: '20px'}}>Документы для поездки</h1>
                 <UploadButton uploadPath={uploadPath}/>
             </div>
+            
             {travelDocuments.length === 0 ? (
                 <p>Документов пока нет</p>
             ) : (
@@ -49,9 +53,12 @@ const TravelDocuments = ({uploadPath, fetchPath, basePath}) => {
                                 className="document-number">{index + 1}</span>
                             <span className="document-name">{doc}</span>
                         </li>
+                        
                     ))}
                 </ul>
+               
             )}
+            </div>
         </div>
     );
 };

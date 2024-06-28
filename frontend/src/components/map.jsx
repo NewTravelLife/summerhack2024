@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {
     DirectionsRenderer,
     DirectionsService,
@@ -18,8 +18,7 @@ const MapComponent = () => {
   const [inputDestination, setInputDestination] = useState('');
   const [markers, setMarkers] = useState([]); // состояние для хранения маркеров
   const [inputMarker, setInputMarker] = useState(''); // состояние для хранения ввода маркера
-  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY; // Если не запускается - укажите ключ напрямую (не забудьте удалить при коммите)
-
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const GetRoad = async () => {
     try {
       const response2 = await fetch("/api/travel/route/2", {
@@ -61,6 +60,7 @@ const MapComponent = () => {
     if (origin && destination) {
       setDirectionsServiceActive(true);
     }
+
   }, [origin, destination]);
 
   const handleClick = () => {

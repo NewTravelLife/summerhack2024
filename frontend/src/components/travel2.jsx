@@ -1,17 +1,8 @@
-import {useState} from 'react';
-import {useParams} from "react-router-dom";
 import PlacesModule from "./places/PlacesModule.jsx";
 import TravelDocuments from "./TravelDocuments.jsx";
 
-const Travel = () => {
-    const {travel_id} = useParams();
-    const [travelInfo, setTravelInfo] = useState();
-    const fetch_data = (travel_id) => {
-        fetch('/api/travel/get/' + travel_id)
-            .then(response => response.json())
-            .then(data => setTravelInfo(data));
-    };
-    fetch_data(travel_id);
+const Travel2 = ({travel_id}) => {
+
     return (
         <div>
             <h1>Инфа по путешествию {travel_id}</h1>
@@ -25,4 +16,4 @@ const Travel = () => {
     );
 
 }
-export default Travel;
+export default Travel2;

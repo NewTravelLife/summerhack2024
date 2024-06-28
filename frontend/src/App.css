@@ -143,6 +143,7 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .animated-text {
@@ -150,6 +151,7 @@ body, html {
     font-size: 47px;
     opacity: 1;
     height: 110px;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .checkpoints {
@@ -252,6 +254,7 @@ body, html {
     font-weight: 500;
     line-height: 38.73px;
     text-align: left;
+    font-family: 'Comfortaa', sans-serif;
 }
 
 .animated-text1 {
@@ -497,4 +500,8 @@ select {
 .hui {
     position: relative;
     top: 75px;
+}
+
+body {
+    font-family: 'Comfortaa', sans-serif;
 }

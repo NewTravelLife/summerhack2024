@@ -10,7 +10,7 @@ const getCords = (lat, lng) => {
 
     const sendCoordsToBackend = async () => {
         try {
-            const response = await fetch('http://localhost/api/travel/', { 
+            const response = await fetch('/api/travel/', { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

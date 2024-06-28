@@ -20,7 +20,7 @@ const Place = ({ travel_id, category, places_data, updateRoute }) => {
         };
         console.log(body);
         try {
-            const response = await fetch('http://localhost/api/travel/new_location/' + travel_id, {
+            const response = await fetch('/api/travel/new_location/' + travel_id, {
                 method: 'POST',
                 body: JSON.stringify(body),
                 headers: {

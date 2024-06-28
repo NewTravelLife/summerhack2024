@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react';
-import PlacesModule from "./places/PlacesModule.jsx";
 import TravelDocuments from "./TravelDocuments.jsx";
 import MapComponent from "./map.jsx";
+import PlacesModule from "./Places/PlacesModule.jsx";
 
 const Travel2 = ({travel_id}) => {
     const [route, setRoute] = useState([]);

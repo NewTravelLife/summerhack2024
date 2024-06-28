@@ -9,12 +9,15 @@ from app.models.travel import Travel
 
 def crud_create_location(latitude: float, longitude: float, location_type: str, order_number: int,
                          travel: Travel) -> Location:
-    location = Location(latitude=latitude, longitude=longitude, location_type=location_type, order_number=order_number,
+    new_location = Location(latitude=latitude, longitude=longitude, location_type=location_type, order_number=order_number,
                         travel=travel)
-    db.session.add(location)
+    for location in crud_get_ordered_locations_by_travel(travel):
+        if location.order_number >= order_number:
+            location.order_number += 1
+    db.session.add(new_location)
     db.session.commit()
-    db.session.refresh(location)
-    return location
+    db.session.refresh(new_location)
+    return new_location
 
 
 def crud_get_location_by_id(id: int) -> Location | None:

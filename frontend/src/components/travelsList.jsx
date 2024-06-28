@@ -12,7 +12,9 @@ const TravelsList = () => {
     return (
         <div>
             <div className="header">
+            <Link to="/">
                 <div className="project-name">newtravel.life</div>
+            </Link>
                 <div className="nav-buttons">
                     <Link to={"/travels"}>
                         <button className="nav-button">Мои путешествия</button>

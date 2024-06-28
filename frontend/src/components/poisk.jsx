@@ -53,12 +53,15 @@ const Poisk = () => {
     const handleComposeRoute = () => {
         handleGeocode(inputOrigin, setOrigin);
         handleGeocode(inputDestination, setDestination);
+        
     };
 
     return (
         <div>
             <div className="header">
+            <Link to="/">
                 <div className="project-name">newtravel.life</div>
+            </Link>
                 <div className="nav-buttons">
                     <Link to={"/travels"}>
                         <button className="nav-button">Мои путешествия</button>
@@ -69,6 +72,7 @@ const Poisk = () => {
                     </Link>
                 </div>
             </div>
+            <div className='travelTable'>
             <div className="text-container0">
                 <div className="animated-text0">
                     Помощник в составлении вашего идеального путешествия
@@ -116,6 +120,7 @@ const Poisk = () => {
                     </LoadScript>
                 </div>
                 </div>
+            </div>
             </div>
     );
 };

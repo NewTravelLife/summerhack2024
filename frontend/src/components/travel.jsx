@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useParams} from "react-router-dom";
+import PlacesModule from "./places/PlacesModule.jsx";
 import TravelDocuments from "./TravelDocuments.jsx";
 
 const Travel = () => {
@@ -19,6 +20,7 @@ const Travel = () => {
                 fetchPath={'/api/travel/files/' + travel_id}
                 basePath={'/api/travel/download_file/' + travel_id + '/'}
             />
+            <PlacesModule travel_id={travel_id}></PlacesModule>
         </div>
     );
 

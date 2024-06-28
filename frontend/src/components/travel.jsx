@@ -1,8 +1,8 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import PlacesModule from "./places/PlacesModule.jsx";
 import TravelDocuments from "./TravelDocuments.jsx";
 import MapComponent from "./map.jsx";
+import PlacesModule from "./Places/PlacesModule.jsx";
 
 const Travel = () => {
     const [route, setRoute] = useState([]);

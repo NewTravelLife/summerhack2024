@@ -5,6 +5,7 @@ import './index.css';
 import './App.css';
 import Poisk from "./components/poisk";
 import 'leaflet/dist/leaflet.css';
+import Travelimg from './assets/travel.png';
 import Travel from "./components/travel.jsx";
 import TravelsList from "./components/travelsList.jsx";
 
@@ -89,6 +90,8 @@ function App() {
             {/*        (<p>Загрузка...</p>)}*/}
             {/*</div>*/}
             <div className="MainInfoUs" >
+                <img  src={Travelimg} alt="" />
+                <div >
                   <p>Мы – команда NewTravel. Веселые и крутые ребята с опытом backend-frontend разработки. 
                     (За плечами у каждого из нас интересные проекты, хакатоны и десятки бессонных ночей кодинга)
                     </p>
@@ -96,6 +99,7 @@ function App() {
                     Наша задача – сделать вашу жизнь проще «Никакой рутины, только впечатления». Сервис NewTravel заберёт организационные хлопоты на себя. Поиск достопримечательностей, музеев, остановок на сон и еду – всё это мы предложим вам сами. Вам останется лишь воплотить незабываемое путешествие в жизнь!
                     Увидимся в дороге!
                     </p>
+                    </div>
 
                 </div>
         </div>

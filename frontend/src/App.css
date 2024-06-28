@@ -247,14 +247,6 @@ body, html {
 
 }
 
-  margin-top: -70px;
-  font-size: 47px;
-  height: 110px;
-  font-family: Inter;
-font-size: 32px;
-font-weight: 500;
-line-height: 38.73px;
-text-align: left;
 
 
 .animated-text1 {
@@ -436,7 +428,7 @@ left: 8%;
   text-align: left;
 
 
-
+}
 
 .box2 img {
     width: 210px;
@@ -493,14 +485,31 @@ left: 8%;
   top: 0;
  }
  .MainInfoUs{
-  position: absolute;
-  left: 10px;
-  max-width: 1500px;
+  position:absolute;
+  left: 10%;
+  width:38%;
+  height: 35%;
+  background-color: #fff;
+  border-radius: 10px;
+  top: 35%;
   color: black;
   text-align: left;
-  font-weight: 700;
-  font-size: x-large;
+  font-size: 20px;
+  font-weight: 500;
+
+
+
  }
+ .MainInfoUs p{
+    position: relative;
+    left: 2%;
+
+  
+  
+  
+   }
+
+
 
 .hui {
     position: relative;
@@ -510,3 +519,10 @@ left: 8%;
 body {
     font-family: 'Comfortaa', sans-serif;
 }
+.MainInfoUs img{
+position: absolute;
+width: 50%;
+left: 140%;
+border-radius: 10px;
+  
+   }

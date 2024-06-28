@@ -2,7 +2,7 @@ import os
 import uuid
 from typing import cast
 
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request, send_file
 
 from app.crud.file import crud_create_file, \
     crud_get_file_by_original_name_and_travel_id, crud_get_file_by_travel_id
@@ -114,9 +114,9 @@ def download_file(travel_id: int, original_name: str):
                                                         travel_id)
     if file is None:
         return '', 404
-    project_disk.download_from_bucket(file.disk_name, os.path.join(
-        current_app.config['UPLOAD_FOLDER'], file.disk_name))
-    return '', 200
+    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.original_name)
+    project_disk.download_from_bucket(file.disk_name, file_path)
+    return send_file(str(file_path)), 200
 
 
 @api_travel.route('/set_locations/<travel_id>', methods=['DELETE'])

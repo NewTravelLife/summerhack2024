@@ -355,7 +355,7 @@ select {
     position: relative;
     height: 35px;
     left: 50px;
-    top: 180px;
+    top: 170px;
 }
 
 .input-otprav {
@@ -391,15 +391,15 @@ select {
 .strelka{
   position: absolute;
   width: 50%;
-  left: 430px;
+  left: 380px;
   top: 300px;
 }
 .poisk{
   position: relative;
   /* cursor: pointer; */
   background: #56CCF2;
-  left: 1020px;
-  top: 250px;
+  left: 900px;
+  top: 300px;
   z-index: 3;
   color: #fff;
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 import '../../Attractions.css' // Импортируйте файл стилей, если он у вас есть
 import Place from './Place'
@@ -9,18 +9,25 @@ const PlacesModule = ({ travel_id }) => {
 			attraction: [],
 		},
 	})
-	useEffect(() => {
+
+	const fetchTravelPlaces = useCallback(() => {
 		fetch('http://localhost/api/travel/route/' + travel_id)
 			.then(response => response.json())
 			.then(data => {
 				setTravelPlaces(data['places'])
 			})
-	})
+	}, [travel_id])
+
+	useEffect(() => {
+		fetchTravelPlaces()
+	}, [fetchTravelPlaces])
+
 	return (
 		<div>
 			{Object.entries(travelPlaces).map(([key, value]) => (
-				<Place key={key} places_data={travelPlaces[key]}></Place>
+				<Place key={key} places_data={travelPlaces[key]} />
 			))}
+			<button onClick={fetchTravelPlaces}>Обновить места</button>
 		</div>
 	)
 }

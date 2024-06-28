@@ -34,7 +34,7 @@ const TravelDocuments = ({ uploadPath, fetchPath, basePath }) => {
                     alignItems: 'center',
                     marginBottom: '20px'
                 }}>
-                    <h1 style={{ marginRight: '20px' }}>Travel Documents</h1>
+                    <h1>Travel Documents</h1>
                     <UploadButton uploadPath={uploadPath} onUploadSuccess={fetchTravelDocuments} />
                 </div>
 

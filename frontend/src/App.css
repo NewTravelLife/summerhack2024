@@ -536,6 +536,11 @@ left: 2%;
       }
       .booxxx img{
         position: relative;
-        left: -100%;
+        left: 50%;
     
       }
+
+span{
+    background-color: #fff;
+    border-radius: 10px;
+}

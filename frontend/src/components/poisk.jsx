@@ -53,6 +53,7 @@ const Poisk = () => {
     const handleComposeRoute = () => {
         handleGeocode(inputOrigin, setOrigin);
         handleGeocode(inputDestination, setDestination);
+        
     };
 
     return (

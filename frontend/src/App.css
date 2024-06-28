@@ -555,3 +555,7 @@ left: 2%;
         flex-grow: 1; /* take up the remaining space */
         flex-basis: 0; /* set the initial width to 0 */
       }
+    .action-button{
+        background-color: #3296d9;
+        
+    }

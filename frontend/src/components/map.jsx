@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     DirectionsRenderer,
     DirectionsService,
@@ -7,11 +7,11 @@ import {
     Marker
 } from '@react-google-maps/api';
 
-const MapComponent = ({route, updateRoute, fetchRoute}) => {
+const MapComponent = ({ route, updateRoute }) => {
     const [response, setResponse] = useState(null);
-    const [directionsServiceActive, setDirectionsServiceActive] = useState(true);
-    const [origin, setOrigin] = useState('');
-    const [destination, setDestination] = useState('');
+    const [directionsServiceActive, setDirectionsServiceActive] = useState(false);
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null);
     const [inputOrigin, setInputOrigin] = useState('');
     const [inputDestination, setInputDestination] = useState('');
     const [markers, setMarkers] = useState([]);
@@ -21,45 +21,46 @@ const MapComponent = ({route, updateRoute, fetchRoute}) => {
     const directionsCallback = useCallback((res) => {
         if (res !== null) {
             if (res.status === 'OK') {
+                console.log('Directions response:', res);
                 setResponse(res);
                 setDirectionsServiceActive(false);
             } else {
-                console.log('response: ', res);
+                console.log('Directions request failed:', res);
             }
         }
     }, []);
 
     useEffect(() => {
-        if (origin && destination) {
+        if (route.length > 0) {
+            console.log('Route:', route);
+            const newOrigin = { lat: route[0].lat, lng: route[0].lng };
+            const newDestination = { lat: route[route.length - 1].lat, lng: route[route.length - 1].lng };
+            setOrigin(newOrigin);
+            setDestination(newDestination);
             setDirectionsServiceActive(true);
         }
-    }, [origin, destination]);
+    }, [route]);
 
     useEffect(() => {
-        if (route.length > 0) {
-            setOrigin({lat: route[0].lat, lng: route[0].lng});
-            setDestination({
-                lat: route[route.length - 1].lat,
-                lng: route[route.length - 1].lng
-            });
-        }
-    }, [route]);
+        console.log('Origin:', origin);
+        console.log('Destination:', destination);
+    }, [origin, destination]);
 
     const handleClick = () => {
         const [latOrigin, lngOrigin] = inputOrigin.split(',').map(Number);
         const [latDestination, lngDestination] = inputDestination.split(',').map(Number);
-        setOrigin({lat: latOrigin, lng: lngOrigin});
-        setDestination({lat: latDestination, lng: lngDestination});
+        setOrigin({ lat: latOrigin, lng: lngOrigin });
+        setDestination({ lat: latDestination, lng: lngDestination });
     };
 
     const handleAddMarker = () => {
         const [lat, lng] = inputMarker.split(',').map(Number);
-        setMarkers([...markers, {lat, lng}]);
+        setMarkers([...markers, { lat, lng }]);
         setInputMarker('');
     };
 
     const handleUpdateRoute = () => {
-        const newRoute = markers; // Example: using markers as the new route points
+        const newRoute = markers;
         updateRoute(newRoute);
     };
 
@@ -75,19 +76,16 @@ const MapComponent = ({route, updateRoute, fetchRoute}) => {
                 <button onClick={handleAddMarker}>Add Marker</button>
                 <button onClick={handleUpdateRoute}>Update Route</button>
             </div>
-            <LoadScript googleMapsApiKey={apiKey}
-                        libraries={['places', 'geometry', 'drawing']}>
+            <LoadScript googleMapsApiKey={apiKey} libraries={['places', 'geometry', 'drawing']}>
                 <GoogleMap
+                    key={JSON.stringify(route)} // Force re-render
                     id="direction-example"
                     mapContainerStyle={{
                         height: '800px',
                         width: '1250px'
                     }}
                     zoom={7}
-                    center={{
-                        lat: 41.85073,
-                        lng: -87.65126
-                    }}
+                    center={origin || { lat: 41.85073, lng: -87.65126 }}
                 >
                     {directionsServiceActive && origin && destination && (
                         <DirectionsService
@@ -108,7 +106,7 @@ const MapComponent = ({route, updateRoute, fetchRoute}) => {
                         />
                     )}
 
-                    {route.length > 0 && (
+                    {route.length > 0 && !response && (
                         <DirectionsRenderer
                             options={{
                                 directions: {
@@ -121,13 +119,13 @@ const MapComponent = ({route, updateRoute, fetchRoute}) => {
                                         }
                                     ]
                                 },
-                                polylineOptions: {strokeColor: '#00FF00'}
+                                polylineOptions: { strokeColor: '#00FF00' }
                             }}
                         />
                     )}
 
                     {markers.map((marker, index) => (
-                        <Marker key={index} position={marker}/>
+                        <Marker key={index} position={marker} />
                     ))}
                 </GoogleMap>
             </LoadScript>

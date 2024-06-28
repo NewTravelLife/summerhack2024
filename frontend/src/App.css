@@ -493,8 +493,12 @@ left: 8%;
  }
  .MainInfoUs{
   position: absolute;
-  left: 10px;
-  max-width: 1500px;
+  left: 10%;
+
+  top:30%;
+  background-color: #fff;
+  width: 45%;
+  border-radius: 10px;
   color: black;
   text-align: left;
   font-weight: 700;
@@ -512,17 +516,14 @@ body {
 .MainInfoUs img{
 position: absolute;
 width: 50%;
-left: 140%;
+top: -10%;
+left: 120%;
 border-radius: 10px;
-  
-   }
-   .MainInfoUs img{
-    position: absolute;
-    width: 50%;
-    left: 140%;
-    border-radius: 10px;
-      
-       }
+  }
+  .MainInfoUs p{
+position: relative;
+left: 2%;
+      }
        .booxxx {
         background-color: #fff;
         border-radius: 10px;

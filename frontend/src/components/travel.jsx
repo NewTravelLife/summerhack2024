@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import TravelDocuments from "./TravelDocuments.jsx";
 import MapComponent from "./map.jsx";
 import PlacesModule from "./Places/PlacesModule.jsx";
-import Place from './places/Place.jsx'; // добавляем этот импорт
+import Place from './Places/Place.jsx'; // добавляем этот импорт
 
 const Travel = () => {
     const [route, setRoute] = useState([]);

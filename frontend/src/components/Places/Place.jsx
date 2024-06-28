@@ -1,14 +1,20 @@
 import acceptIcon from '../../assets/accept.png'
 
-const Place = ({ places_data }) => {
+const Place = ({ category, places_data }) => {
 	if (!Array.isArray(places_data)) {
 		return <h1>Загрузка мест...</h1>
+	}
+	const placesCategoryRussian = {
+		attraction: 'Достопримечательности',
+		food: 'Кафе и рестораны',
+		hotel: 'Жилье и отели',
+		museum: 'Музеи',
 	}
 
 	return (
 		<div>
 			<div className='attractions-container'>
-				<h2>TODO</h2>
+				<h2>{placesCategoryRussian[category]}</h2>
 
 				{places_data.map((place_data, index) => (
 					<div key={index} className='place_data-item'>

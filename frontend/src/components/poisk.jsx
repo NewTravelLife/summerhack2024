@@ -117,7 +117,6 @@ const Poisk = () => {
                 </div>
                 </div>
             </div>
-        </div>
     );
 };
 

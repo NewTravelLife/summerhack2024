@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import '../App.css';
 import '../index.css';
 import strelkaUrl from '../assets/strelka.png';
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {Autocomplete, LoadScript} from '@react-google-maps/api';
 import getCords from "./travelManager.jsx";
 import {useCookies} from "react-cookie";
@@ -58,18 +58,17 @@ const Poisk = () => {
     return (
         <div>
             <div className="header">
-                <Link to="/">
-                    <div className="project-name">newtravel.life</div>
-                </Link>
+                <div className="project-name">newtravel.life</div>
                 <div className="nav-buttons">
-                    <button className="nav-button">Мои путешествия</button>
+                    <Link to={"/travels"}>
+                        <button className="nav-button">Мои путешествия</button>
+                    </Link>
                     <Link to="/poisk">
                         <button className="nav-button">Создать путешествие
                         </button>
                     </Link>
                 </div>
             </div>
-            <div className='travelTable'>
             <div className="text-container0">
                 <div className="animated-text0">
                     Помощник в составлении вашего идеального путешествия

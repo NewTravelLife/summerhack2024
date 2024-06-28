@@ -50,7 +50,7 @@ const TravelDocuments = ({ uploadPath, fetchPath, basePath }) => {
                                     <img src={downloadIcon} alt="Download" />
                                 </a>
                                 <span className="document-number">{index + 1}</span>
-                                <span className="document-name">{doc}</span>
+                                <span  className="document-name">{doc}</span>
                             </li>
                         ))}
                     </ul>

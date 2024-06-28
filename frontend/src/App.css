@@ -539,8 +539,8 @@ left: 2%;
         left: 50%;
     
       }
+      .document-name{
+        background-color: #fff;
+        display: flex;
+      }
 
-span{
-    background-color: #fff;
-    border-radius: 10px;
-}

@@ -3,7 +3,7 @@ import '../TravelDocuments.css';
 import downloadIcon from '../assets/download.png';
 import UploadButton from './UploadButton.jsx';
 
-const TravelDocuments = ({uploadPath: fetchPath}) => {
+const TravelDocuments = ({uploadPath, fetchPath, basePath}) => {
     const [travelDocuments, setTravelDocuments] = useState([]);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const TravelDocuments = ({uploadPath: fetchPath}) => {
                 marginBottom: '20px'
             }}>
                 <h1 style={{marginRight: '20px'}}>Документы для поездки</h1>
-                <UploadButton uploadPath="api/travel/upload_file/1"/>
+                <UploadButton uploadPath={uploadPath}/>
             </div>
             {travelDocuments.length === 0 ? (
                 <p>Документов пока нет</p>
@@ -40,9 +40,11 @@ const TravelDocuments = ({uploadPath: fetchPath}) => {
                 <ul className="document-list">
                     {travelDocuments.map((doc, index) => (
                         <li key={index} className="document-item">
-                            <button className="download-button">
+                            <a className="download-button" href={
+                                basePath + doc
+                            } target="_blank">
                                 <img src={downloadIcon} alt="Download"/>
-                            </button>
+                            </a>
                             <span
                                 className="document-number">{index + 1}</span>
                             <span className="document-name">{doc}</span>

@@ -2,11 +2,11 @@ import os
 import uuid
 from typing import cast
 
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request, send_file
 
 from app.crud.file import crud_create_file, \
     crud_get_file_by_original_name_and_travel_id, crud_get_file_by_travel_id
-from app.crud.location import crud_create_location, crud_get_location_by_id
+from app.crud.location import crud_create_location, crud_get_location_by_id, crud_get_last_location_by_travel
 from app.crud.travel import crud_create_travel, crud_get_travel_by_id
 from app.database import db
 from app.schemas.travel import TravelCreateRequest, TravelCreateResponse, \
@@ -114,9 +114,9 @@ def download_file(travel_id: int, original_name: str):
                                                         travel_id)
     if file is None:
         return '', 404
-    project_disk.download_from_bucket(file.disk_name, os.path.join(
-        current_app.config['UPLOAD_FOLDER'], file.disk_name))
-    return '', 200
+    file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], file.original_name)
+    project_disk.download_from_bucket(file.disk_name, file_path)
+    return send_file(str(file_path)), 200
 
 
 @api_travel.route('/set_locations/<travel_id>', methods=['DELETE'])
@@ -132,4 +132,19 @@ def set_locations(travel_id: int):
         location = crud_get_location_by_id(set_location['id'])
         location.order_number = set_location['order_number']
     db.session.commit()
+    return '', 200
+
+
+@api_travel.route('/new_location/<travel_id>/', methods=['POST'])
+def new_location(travel_id):
+    if travel_id is None:
+        return '', 400
+    if not travel_id.isdigit():
+        return '', 400
+    data = request.get_json()
+    if data is None:
+        return '', 400
+    order_num = crud_get_last_location_by_travel(travel_id).order_number - 1
+    crud_create_location(data['lat'], data['lon'], data['location_type'], order_num,
+                         crud_get_travel_by_id(int(travel_id)))
     return '', 200

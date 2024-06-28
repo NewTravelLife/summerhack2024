@@ -16,23 +16,23 @@ def crud_create_file(disk_name: str, original_name: str, travel: Travel) -> File
 
 def crud_get_file_by_id(id: int) -> File | None:
     stmt = select(File).where(File.id == id)
-    file = db.session.execute(stmt)
+    file = db.session.scalar(stmt)
     return file
 
 
 def crud_get_file_by_travel_id(travel_id: int) -> List[File] | None:
     stmt = select(File).where(File.travel_id == travel_id)
-    file = db.session.execute(stmt).all()
+    file = db.session.scalars(stmt).all()
     return file
 
 
 def crud_get_file_by_original_name_and_travel_id(original_name: str, travel_id: int) -> File | None:
     stmt = select(File).where(and_(File.original_name == original_name, File.travel_id == travel_id))
-    file = db.session.execute(stmt)
-    return file
+    file = db.session.scalars(stmt).all()
+    return file[-1]
 
 
 def crud_get_file_by_disk_name(disk_name: int) -> File | None:
     stmt = select(File).where(File.disk_name == disk_name)
-    file = db.session.execute(stmt)
+    file = db.session.scalar(stmt)
     return file

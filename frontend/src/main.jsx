@@ -6,6 +6,7 @@ import './App.css';
 import Poisk from "./components/poisk";
 import 'leaflet/dist/leaflet.css';
 import Travel from "./components/travel.jsx";
+import TravelsList from "./components/travelsList.jsx";
 
 
 function App() {
@@ -44,7 +45,9 @@ function App() {
             <div className="header">
                 <div className="project-name">newtravel.life</div>
                 <div className="nav-buttons">
-                    <button className="nav-button">Мои путешествия</button>
+                    <Link to={"/travels"}>
+                        <button className="nav-button">Мои путешествия</button>
+                    </Link>
                     <Link to="/poisk">
                         <button className="nav-button">Создать путешествие
                         </button>
@@ -96,7 +99,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/" element={<App/>}/>
                 <Route path="/poisk" element={<Poisk/>}/>
                 <Route path="/travel/:travel_id" element={<Travel/>}/>
+                <Route path="/travels" element={<TravelsList/>}/>
             </Routes>
         </Router>
     </React.StrictMode>
-);
+)
+;
